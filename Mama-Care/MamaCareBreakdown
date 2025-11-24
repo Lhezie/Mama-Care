@@ -1,0 +1,242 @@
+MamaCare - Pregnancy & Child Health Companion (iOS)
+1) Goal and scope
+Provide an offline-first, privacy-preserving iOS app that supports:
+●	Pregnant users: pregnancy-week nutrition, vaccine schedule for the baby (based on EDD), daily mood check-ins, AI chat, and emergency escalation (premium).
+
+●	Users with a child: postpartum motivation, vaccine schedule (based on birth date), daily mood check-ins, AI chat, and emergency escalation (premium).
+
+●	Countries supported: UK and Nigeria (used for pricing and vaccine datasets).
+
+2) Actors
+●	User (Pregnant Mother)
+
+●	User (Mother with child)
+
+●	Emergency Contact (receives user-initiated alerts by prefilled SMS or Email)
+
+●	System Services: Keychain/CryptoKit, Notifications, StoreKit, optional CloudKit
+
+●	Stretch actor (time permitting): Firebase Cloud Function used to relay alerts to Twilio (SMS) and SendGrid (email)
+
+3) Assumptions and constraints
+●	iOS 17 or later (SwiftData).
+
+●	Default storage is device-only with end-to-end encryption (AES-GCM key in Keychain).
+
+●	Optional cloud sync (opt-in) with CloudKit and iCloud Keychain for key sync.
+
+●	No PHI is sent to any server. In v1, escalation uses the on-device Messages or Mail composer.
+
+●	AI chat is not medical advice. A disclaimer is shown.
+
+●	Subscription uses StoreKit. Prices: £4 (UK) and ₦8,000 (Nigeria).
+
+4) Functional requirements
+4.1 Onboarding and sign-in
+●	(F1) Signup with Full Name, email, country(choose UK/NG), Password and Confirm Password. Then after Signup, proceed to Sign in with email and password.
+
+●	(F2) Consent screen: choose storage mode (Device-only or iCloud sync), accept privacy/T&Cs, and opt in to notifications.
+
+●	(F3) Select user type: “I am pregnant” or “I have a child.” And add emergency contact
+
+●	(F4) Provide EDD (pregnant) or Birth Date (has child). Both are editable later.
+
+4.2 Emergency contact and escalation (premium)
+●	(F5) Manage emergency contacts: name, relationship, phone or email. Stored encrypted.
+
+●	(F6) From a “Not Good” mood check-in, subscribed users can escalate using a prefilled SMS or Email composer. The user must press Send.
+
+●	(F7) If not subscribed, show the paywall and, after purchase, continue with escalation.
+
+4.3 Daily mood check-ins and support
+●	(F8) Notifications three times daily (default 08:00, 14:00, 20:00; user can edit): choices are Good, Okay, or Not Good.
+
+●	(F9) Responses:
+
+○	Good: show a short motivational message.
+
+○	Okay: offer supportive tips and the option to open AI chat.
+
+○	Not Good: offer supportive tips, ask about escalation (premium), or suggest calming audio or a short reassuring video.
+
+●	(F10) Log mood history (timestamp and choice). Stored encrypted.
+
+4.4 Vaccination planning and tracking
+●	(F11) Load vaccine data from JSON by country (UK or Nigeria).
+
+●	(F12) Build the schedule from EDD or Birth Date, and mark each item as Upcoming, Due, Overdue, or Completed.
+
+○	Users cannot mark an Upcoming item as Completed.
+
+●	(F13) Schedule a local notification 24 hours before each Due vaccine.
+
+●	(F14) Allow users to manually recompute when EDD, Birth Date, or country changes.
+
+4.5 Nutrition and postpartum content
+●	(F15) For pregnant users, show weekly nutrition content based on pregnancy week (EDD).
+
+●	(F16) For mothers with a child, show postpartum motivation for weeks 0–52 based on Birth Date.
+
+●	(F17) Content is read-only. Optional bookmarking/favorites.
+
+4.6 AI chat
+●	(F18) AI chat is available to all users, with a clear disclaimer on first use.
+
+●	(F19) Messages are stored locally and encrypted. Users can delete their messages.
+
+4.7 Subscription and paywall
+●	(F20) StoreKit subscription with regional pricing (UK £4, Nigeria ₦8,000).
+
+●	(F21) Subscription gates emergency escalation and future premium features.
+
+●	(F22) Support purchase restore and basic subscription state handling.
+
+4.8 Settings
+●	(F23) Edit profile (name and country), user type, and EDD/Birth Date.
+
+●	(F24) Switch storage mode between Device-only and iCloud sync.
+
+●	(F25) Edit check-in times and enable or disable reminders.
+
+●	(F26) Export or delete local data, and sign out.
+
+4.9 Notifications
+●	(F27) Local notifications for mood check-ins (three times daily) and vaccine 24-hour reminders.
+
+●	(F28) Respect system notification permissions and guide the user if disabled.
+
+5) Non-functional requirements
+Security and privacy
+●	(N1) AES-256-GCM encryption with CryptoKit; symmetric key in the Keychain.
+
+●	(N2) Optional iCloud Keychain sync for the symmetric key.
+
+●	(N3) No third-party analytics or trackers; only minimal diagnostics.
+
+●	(N4) Users can delete all local data and turn off iCloud sync.
+
+Reliability and performance
+●	(N5) Offline-first: all core features work without a network connection.
+
+●	(N6) App launch under 2 seconds on A13 or later; smooth scrolling lists.
+
+Usability and accessibility
+●	(N7) WCAG AA practices: Dynamic Type, VoiceOver labels, and adequate contrast.
+
+●	(N8) Simple flows that typically take three taps or fewer.
+
+Localization and regionalization
+●	(N9) English UI (UK and Nigeria). Country selection drives vaccine dataset and pricing.
+
+Compliance
+●	(N10) Medical disclaimer displayed clearly.
+
+●	(N11) Follow Apple Human Interface Guidelines and App Store Review Guidelines.
+
+6) Data model (high level)
+●	UserProfile (id, name, country, timezone, storage, plan, userType, createdAt)
+
+●	PregnancyData (edd, birthDate)
+
+●	CheckinSchedule (hours: [Int])
+
+●	MoodEntry (when, mood, escalated, iv/ct/tag)
+
+●	EmergencyContact (encrypted fields plus a masked display value)
+
+●	VaccineStatus (vaccineId, dueDate, status, completedAt)
+
+●	ChatMessage (timestamp, role, encrypted body)
+
+All sensitive records are encrypted at rest.
+
+
+7) Technology and architecture
+●	iOS 17+, SwiftUI, MVVM.
+
+●	SwiftData for local persistence.
+
+●	CryptoKit + Keychain for the encrypted vault; optional CloudKit sync.
+
+●	UserNotifications for reminders.
+
+●	StoreKit for subscription and paywall.
+
+●	AI via a secure API wrapper, with user consent and no PHI uploaded.
+
+Stretch (time permitting): Firebase Cloud Functions with Twilio Programmable SMS and Twilio SendGrid for one-tap escalation.
+8) In-scope vs out-of-scope
+●	In scope (v1): everything in Section 4, using on-device composer for escalation.
+
+●	Out of scope (v1): server-side messaging (Twilio), community features, blog, online vaccine card upload, real-time chat with contacts, Android app.
+
+9) Acceptance criteria (MVP)
+●	Users can create a profile, give consent, choose user type, and set EDD or Birth Date.
+
+●	Users can add an emergency contact and attempt escalation, which opens the prefilled composer for subscribed users.
+
+●	Mood check-ins arrive three times daily; responses are logged; “Not Good” offers escalation.
+
+●	Vaccinations show Upcoming, Due, Overdue, and Completed; Upcoming cannot be completed; 24-hour reminders work.
+
+●	Pregnant users see nutrition for the current week; mothers see a postpartum message for the current week.
+
+●	AI chat opens, with the disclaimer displayed on first use.
+
+●	Subscription purchase and restore work, and regional pricing is applied.
+
+10) Requirements by user type
+A) User: I am pregnant
+Essential (Must)
+●	Create profile and consent; choose storage mode.
+
+●	Set EDD; user type is “pregnant.”
+
+●	Daily mood check-ins (three times) with Good, Okay, or Not Good.
+
+●	Show weekly nutrition for the current pregnancy week.
+
+●	Build vaccine schedule from EDD and country; handle due/overdue; send 24-hour reminders; block completion of Upcoming items.
+
+●	AI chat with disclaimer.
+
+●	Manage emergency contact (add, edit, delete).
+
+●	Escalation with prefilled SMS/Email (subscription required).
+
+●	Settings: edit EDD, check-in times, storage mode, and export/delete data.
+
+Desirable (Should)
+●	Growth journaling (photos and notes) in the encrypted vault.
+●	Export data (user-initiated, encrypted file).
+Luxury (Could)
+●	Mobile vaccination card with QR that, when scanned, shows completed vaccinations and child vaccination history.
+
+Stretch (time permitting)
+●	One-tap escalation using Firebase Cloud Functions and Twilio/SendGrid.
+
+
+B) User: I have a child
+Essential (Must)
+●	Create profile and consent; set Birth Date; user type is “has child.”
+
+●	Daily mood check-ins (three times) and logging.
+
+●	Show postpartum motivation for weeks 0–52 based on Birth Date.
+
+●	Build vaccine schedule from Birth Date and country; handle due/overdue; send 24-hour reminders; block completion of Upcoming items.
+
+●	AI chat with disclaimer.
+
+●	Manage emergency contact; escalation requires a subscription.
+
+●	Settings: edit Birth Date, check-in times, storage mode, signout and delete data.
+
+Desirable (Should)
+●	Growth journaling (photos and notes) in the encrypted vault.
+●	Export data (user-initiated, encrypted file).
+
+Luxury (Could)
+●	Mobile vaccination card with QR that, when scanned, shows completed vaccinations and child vaccination history.
+Stretch (time permitting)
+●	One-tap escalation using Firebase Cloud Functions and Twilio.

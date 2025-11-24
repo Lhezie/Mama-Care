@@ -1,0 +1,3053 @@
+{
+  "meta": {
+    "title": "MamaCare Daily Nutrition (40 weeks × 7 days)",
+    "version": "doctor-safe, medication-free",
+    "notes": [
+      "This plan provides food-based suggestions only. It does not prescribe medicines or supplements.",
+      "Always adapt to allergies, intolerances, cultural foods, and clinician advice.",
+      "Fish choices are low‑mercury; avoid high‑mercury species."
+    ]
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 9,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 10,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 11,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 12,
+      "theme": "First trimester: nausea-friendly, fibre, iron + vitamin C, hydration; avoid unpasteurised foods & high‑mercury fish.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Soups",
+            "Dark leafy greens",
+            "Citrus fruit"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Oats",
+            "Beans",
+            "Okra"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Lentils",
+            "Tomatoes",
+            "Guava"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Yogurt (pasteurised)",
+            "Fortified plant milk",
+            "Broccoli"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (with bones, low‑mercury)",
+            "Tilapia (low‑mercury)",
+            "Flaxseed"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Carrots",
+            "Cabbage",
+            "Papaya (ripe)"
+          ],
+          "waterGoalCups": 8
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Watermelon",
+            "Cucumber",
+            "Wholegrain bread"
+          ],
+          "waterGoalCups": 8
+        }
+      ]
+    },
+    {
+      "week": 13,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 14,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 15,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 16,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 17,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 18,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 19,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 20,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 21,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 22,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 23,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 24,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 25,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 26,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 27,
+      "theme": "Second trimester: steady energy, calcium & vitamin D (per clinician), omega‑3 (low‑mercury), diverse fruit/veg.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Rice & beans",
+            "Avocado",
+            "Eggs"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Brown bread",
+            "Spinach",
+            "Okra soup"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Salmon (low‑mercury)",
+            "Chia seeds",
+            "Walnuts"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Greek yogurt (pasteurised)",
+            "Cheese (pasteurised)",
+            "Fortified milk"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Mackerel (low‑mercury)",
+            "Pumpkin seeds",
+            "Groundnuts/Peanuts (if no allergy)"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Sweet potatoes",
+            "Bell peppers",
+            "Mango"
+          ],
+          "waterGoalCups": 10
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Water",
+            "Soups",
+            "Whole grains"
+          ],
+          "waterGoalCups": 10
+        }
+      ]
+    },
+    {
+      "week": 28,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 29,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 30,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 31,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 32,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 33,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 34,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 35,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 36,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 37,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 38,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 39,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    },
+    {
+      "week": 40,
+      "theme": "Third trimester: higher hydration, fibre for constipation, smaller frequent meals; gentle proteins & whole grains.",
+      "days": [
+        {
+          "day": 1,
+          "headline": "Small, frequent balanced meals",
+          "foodSuggestions": [
+            "Boiled yam",
+            "Vegetable soup",
+            "Apples"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 2,
+          "headline": "High‑fibre whole grains for digestion",
+          "foodSuggestions": [
+            "Lentils",
+            "Broccoli",
+            "Greek yogurt (pasteurised)"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 3,
+          "headline": "Iron‑rich foods paired with vitamin C",
+          "foodSuggestions": [
+            "Trout (low‑mercury)",
+            "Eggs",
+            "Tofu"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 4,
+          "headline": "Pasteurised dairy or fortified alternatives for calcium",
+          "foodSuggestions": [
+            "Okra",
+            "Cabbage",
+            "Leafy greens"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 5,
+          "headline": "Low‑mercury omega‑3 sources",
+          "foodSuggestions": [
+            "Sardines (low‑mercury)",
+            "Beans",
+            "Plantain"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 6,
+          "headline": "Colourful fruit & veg for micronutrients",
+          "foodSuggestions": [
+            "Bananas",
+            "Brown rice",
+            "Carrots"
+          ],
+          "waterGoalCups": 12
+        },
+        {
+          "day": 7,
+          "headline": "Hydration and limit caffeine (≤200 mg/day)",
+          "foodSuggestions": [
+            "Soups",
+            "Cucumber",
+            "Watermelon"
+          ],
+          "waterGoalCups": 12
+        }
+      ]
+    }
+  ]
+}

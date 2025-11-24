@@ -1,0 +1,412 @@
+{
+  "meta": {
+    "country": "NG",
+    "schema_version": "1.0",
+    "generated_at": "2025-10-20",
+    "notes": "Built from UNICEF/NPHCDA schedule; includes MenA at 9 months, IPV at 6 & 14 weeks, Rotavirus at 6/10/14 weeks, MCV2 at 15 months. HPV is single-dose (preferred) for girls 9–14 years; include 2-dose regimen option per clinical context."
+  },
+  "sources": [
+    {
+      "name": "UNICEF/NPHCDA Nigeria Immunization Schedule (official chart)",
+      "url": "https://www.unicef.org/nigeria/media/9911/file/Nigeria%20Immunization%20Schedule.pdf.pdf",
+      "retrieved": "2025-10-20"
+    },
+    {
+      "name": "WHO AFRO – Nigeria rotavirus introduction (3 oral doses at 6/10/14 weeks)",
+      "url": "https://www.afro.who.int/countries/nigeria/news/nigeria-avert-50000-deaths-children-annually-introduces-rotavirus-vaccine-vaccination-schedule",
+      "retrieved": "2025-10-20"
+    },
+    {
+      "name": "IVAC/JHU – Nigeria introduces single-dose HPV into RI (Oct 2023)",
+      "url": "https://publichealth.jhu.edu/ivac/2024/one-dose-at-a-time-mobilizing-to-eliminate-cervical-cancer-in-nigeria",
+      "retrieved": "2025-10-20"
+    }
+  ],
+  "schedule": [
+    {
+      "label": "At Birth",
+      "age_days": 0,
+      "coadmin_group": "BIRTH",
+      "items": [
+        {
+          "code": "BCG",
+          "name": "BCG",
+          "antigens": [
+            "TB"
+          ],
+          "route": "ID",
+          "dose_ml": 0.05,
+          "site": "Left upper arm"
+        },
+        {
+          "code": "OPV0",
+          "name": "Oral Polio Vaccine 0",
+          "antigens": [
+            "Polio"
+          ],
+          "route": "oral",
+          "dose_drops": 2,
+          "site": "Mouth"
+        },
+        {
+          "code": "HEPB0",
+          "name": "Hepatitis B (birth dose)",
+          "antigens": [
+            "HepB"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral right thigh",
+          "admin_window_days": {
+            "min": 0,
+            "max": 1
+          }
+        }
+      ]
+    },
+    {
+      "label": "6 weeks",
+      "age_days": 42,
+      "coadmin_group": "6W",
+      "items": [
+        {
+          "code": "PENTA1",
+          "name": "Pentavalent 1 (DTP-HepB-Hib)",
+          "antigens": [
+            "DTP",
+            "HepB",
+            "Hib"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral left thigh",
+          "series": {
+            "name": "PENTA",
+            "dose_number": 1,
+            "total_doses": 3,
+            "min_interval_days_to_next": 28
+          }
+        },
+        {
+          "code": "PCV1",
+          "name": "Pneumococcal Conjugate Vaccine 1",
+          "antigens": [
+            "Pneumococcus"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral right thigh",
+          "series": {
+            "name": "PCV",
+            "dose_number": 1,
+            "total_doses": 3,
+            "min_interval_days_to_next": 28
+          }
+        },
+        {
+          "code": "OPV1",
+          "name": "Oral Polio Vaccine 1",
+          "antigens": [
+            "Polio"
+          ],
+          "route": "oral",
+          "dose_drops": 2,
+          "site": "Mouth",
+          "series": {
+            "name": "OPV",
+            "dose_number": 1,
+            "total_doses": 3,
+            "min_interval_days_to_next": 28
+          }
+        },
+        {
+          "code": "ROTA1",
+          "name": "Rotavirus 1",
+          "antigens": [
+            "Rotavirus"
+          ],
+          "route": "oral",
+          "site": "Mouth",
+          "series": {
+            "name": "Rota",
+            "dose_number": 1,
+            "total_doses": 3,
+            "min_interval_days_to_next": 28
+          }
+        },
+        {
+          "code": "IPV1",
+          "name": "Inactivated Polio Vaccine 1",
+          "antigens": [
+            "Polio"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral right thigh (2.5cm apart from PCV)"
+        }
+      ]
+    },
+    {
+      "label": "10 weeks",
+      "age_days": 70,
+      "coadmin_group": "10W",
+      "items": [
+        {
+          "code": "PENTA2",
+          "name": "Pentavalent 2",
+          "antigens": [
+            "DTP",
+            "HepB",
+            "Hib"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral left thigh",
+          "series": {
+            "name": "PENTA",
+            "dose_number": 2,
+            "total_doses": 3,
+            "min_interval_days_to_next": 28
+          }
+        },
+        {
+          "code": "PCV2",
+          "name": "Pneumococcal Conjugate Vaccine 2",
+          "antigens": [
+            "Pneumococcus"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral right thigh",
+          "series": {
+            "name": "PCV",
+            "dose_number": 2,
+            "total_doses": 3,
+            "min_interval_days_to_next": 28
+          }
+        },
+        {
+          "code": "OPV2",
+          "name": "Oral Polio Vaccine 2",
+          "antigens": [
+            "Polio"
+          ],
+          "route": "oral",
+          "dose_drops": 2,
+          "site": "Mouth",
+          "series": {
+            "name": "OPV",
+            "dose_number": 2,
+            "total_doses": 3,
+            "min_interval_days_to_next": 28
+          }
+        },
+        {
+          "code": "ROTA2",
+          "name": "Rotavirus 2",
+          "antigens": [
+            "Rotavirus"
+          ],
+          "route": "oral",
+          "site": "Mouth",
+          "series": {
+            "name": "Rota",
+            "dose_number": 2,
+            "total_doses": 3,
+            "min_interval_days_to_next": 28
+          }
+        }
+      ]
+    },
+    {
+      "label": "14 weeks",
+      "age_days": 98,
+      "coadmin_group": "14W",
+      "items": [
+        {
+          "code": "PENTA3",
+          "name": "Pentavalent 3",
+          "antigens": [
+            "DTP",
+            "HepB",
+            "Hib"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral left thigh",
+          "series": {
+            "name": "PENTA",
+            "dose_number": 3,
+            "total_doses": 3
+          }
+        },
+        {
+          "code": "PCV3",
+          "name": "Pneumococcal Conjugate Vaccine 3",
+          "antigens": [
+            "Pneumococcus"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral right thigh",
+          "series": {
+            "name": "PCV",
+            "dose_number": 3,
+            "total_doses": 3
+          }
+        },
+        {
+          "code": "OPV3",
+          "name": "Oral Polio Vaccine 3",
+          "antigens": [
+            "Polio"
+          ],
+          "route": "oral",
+          "dose_drops": 2,
+          "site": "Mouth",
+          "series": {
+            "name": "OPV",
+            "dose_number": 3,
+            "total_doses": 3
+          }
+        },
+        {
+          "code": "ROTA3",
+          "name": "Rotavirus 3",
+          "antigens": [
+            "Rotavirus"
+          ],
+          "route": "oral",
+          "site": "Mouth",
+          "series": {
+            "name": "Rota",
+            "dose_number": 3,
+            "total_doses": 3
+          }
+        },
+        {
+          "code": "IPV2",
+          "name": "Inactivated Polio Vaccine 2",
+          "antigens": [
+            "Polio"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral right thigh (2.5cm apart from PCV)"
+        }
+      ]
+    },
+    {
+      "label": "6 months",
+      "age_days": 183,
+      "coadmin_group": "6M",
+      "items": [
+        {
+          "code": "VITA1",
+          "name": "Vitamin A (1st dose)",
+          "type": "supplement",
+          "route": "oral",
+          "dose_IU": 100000,
+          "site": "Mouth"
+        }
+      ]
+    },
+    {
+      "label": "9 months",
+      "age_days": 274,
+      "coadmin_group": "9M",
+      "items": [
+        {
+          "code": "MCV1",
+          "name": "Measles-containing vaccine (1st dose)",
+          "antigens": [
+            "Measles"
+          ],
+          "route": "SC",
+          "dose_ml": 0.5,
+          "site": "Left upper arm"
+        },
+        {
+          "code": "YF",
+          "name": "Yellow Fever",
+          "antigens": [
+            "YellowFever"
+          ],
+          "route": "SC",
+          "dose_ml": 0.5,
+          "site": "Right upper arm"
+        },
+        {
+          "code": "MENA",
+          "name": "Meningitis A Conjugate",
+          "antigens": [
+            "MenA"
+          ],
+          "route": "IM",
+          "dose_ml": 0.5,
+          "site": "Anterolateral left thigh"
+        }
+      ]
+    },
+    {
+      "label": "12 months",
+      "age_days": 365,
+      "coadmin_group": "12M",
+      "items": [
+        {
+          "code": "VITA2",
+          "name": "Vitamin A (2nd dose)",
+          "type": "supplement",
+          "route": "oral",
+          "dose_IU": 200000,
+          "site": "Mouth"
+        }
+      ]
+    },
+    {
+      "label": "15 months",
+      "age_days": 456,
+      "coadmin_group": "15M",
+      "items": [
+        {
+          "code": "MCV2",
+          "name": "Measles-containing vaccine (2nd dose)",
+          "antigens": [
+            "Measles"
+          ],
+          "route": "SC",
+          "dose_ml": 0.5,
+          "site": "Left upper arm"
+        }
+      ]
+    }
+  ],
+  "adolescent": [
+    {
+      "code": "HPV",
+      "name": "Human Papillomavirus (girls 9–14 years)",
+      "target": {
+        "sex": "female",
+        "age_years_min": 9,
+        "age_years_max": 14
+      },
+      "route": "IM",
+      "site": "Deltoid",
+      "regimens": [
+        {
+          "doses": 1,
+          "interval_days": 0,
+          "preferred": true,
+          "note": "Single-dose national policy since Oct 2023"
+        },
+        {
+          "doses": 2,
+          "interval_days": 180,
+          "preferred": false,
+          "note": "Use per clinical guidance (e.g., immunocompromised)"
+        }
+      ]
+    }
+  ],
+
+}
