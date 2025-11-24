@@ -174,30 +174,26 @@ struct PostpartumCareTipView: View {
         }
     }
     
-    // MARK: - Pause Button
+    // MARK: - Quote Icon
     private var pauseButton: some View {
-        Button {
-            isPaused.toggle()
-        } label: {
-            ZStack {
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            gradient: Gradient(colors: [
-                                Color.mamaCareUpcoming,
-                                Color.mamaCarePurple
-                            ]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
+        ZStack {
+            Circle()
+                .fill(
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color.mamaCareUpcoming,
+                            Color.mamaCarePurple
+                        ]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
                     )
-                    .frame(width: 72, height: 72)
-                    .shadow(color: Color.mamaCareUpcoming.opacity(0.4), radius: 12, x: 0, y: 6)
-                
-                Image(systemName: isPaused ? "play.fill" : "pause.fill")
-                    .font(.system(size: 28))
-                    .foregroundColor(.white)
-            }
+                )
+                .frame(width: 72, height: 72)
+                .shadow(color: Color.mamaCareUpcoming.opacity(0.4), radius: 12, x: 0, y: 6)
+            
+            Image(systemName: "quote.opening")
+                .font(.system(size: 28))
+                .foregroundColor(.white)
         }
     }
     

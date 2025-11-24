@@ -69,7 +69,7 @@ enum UserType: String, CaseIterable, Codable {
 
 enum StorageMode: String, CaseIterable, Codable {
     case deviceOnly = "Device-only"
-    case iCloudSync = "iCloud Sync"
+    case cloud = "Cloud (Firebase)"
 }
 
 struct EmergencyContact: Identifiable, Codable {

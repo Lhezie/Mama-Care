@@ -168,24 +168,22 @@ struct SignInView: View {
     // MARK: - Login Logic
     private func handleLogin() {
         // Basic validation
-        guard !email.isEmpty else {
-            errorMessage = "Please enter your email address."
+        guard !email.isEmpty, !password.isEmpty else {
+            errorMessage = "Please enter your email and password."
             showError = true
             return
         }
         
-        // Check if user exists and has completed onboarding
-        if viewModel.hasCompletedOnboarding, let user = viewModel.currentUser {
-            // Verify email (case-insensitive)
-            if user.email.lowercased() == email.lowercased() {
-                viewModel.login()
-            } else {
-                errorMessage = "Invalid credentials or no account found."
+        // Call Firebase Login
+        viewModel.login(email: email, password: password) { result in
+            switch result {
+            case .success:
+                // Login successful, ViewModel handles state update
+                break
+            case .failure(let error):
+                errorMessage = error.localizedDescription
                 showError = true
             }
-        } else {
-            errorMessage = "No account found. Please sign up."
-            showError = true
         }
     }
 }

@@ -8,9 +8,16 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 class MamaCareViewModel: ObservableObject {
     @Published var currentUser: User?
+    private var cancellables = Set<AnyCancellable>()
+    
+    // Services
+    private let authService = AuthService.shared
+    private let userService = UserService.shared
+    private let moodService = MoodService.shared
        @Published var emergencyContacts: [EmergencyContact] = []
        @Published var moodCheckIns: [MoodCheckIn] = []
        @Published var vaccines: [Vaccine] = []
@@ -38,9 +45,88 @@ class MamaCareViewModel: ObservableObject {
            loadJSONData()
        }
     
-    func addMoodCheckIn(_ mood: MoodType, notes: String?) {
-        let checkIn = MoodCheckIn(moodType: mood, notes: notes)
-        moodCheckIns.append(checkIn)
+     // MARK: - Mood Check-In Logic
+    
+    func addMoodCheckIn(_ checkIn: MoodCheckIn) {
+        // 1. Update local state immediately for UI responsiveness
+        moodCheckIns.insert(checkIn, at: 0)
+        
+        guard let user = currentUser else { return }
+        
+        // 2. Persist based on Storage Mode
+        if user.storageMode == .cloud {
+            guard let uid = authService.currentUser?.uid else { return }
+            print("☁️ Saving mood to Cloud...")
+            moodService.addMood(checkIn, userID: uid)
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        print("❌ Failed to save mood to Cloud: \(error.localizedDescription)")
+                    }
+                } receiveValue: {
+                    print("✅ Mood saved to Cloud")
+                }
+                .store(in: &cancellables)
+        } else {
+            print("📱 Saving mood locally (Encrypted)...")
+            saveMoodsLocally()
+        }
+    }
+    
+    func fetchMoodCheckIns() {
+        guard let user = currentUser else { return }
+        
+        if user.storageMode == .cloud {
+            guard let uid = authService.currentUser?.uid else { return }
+            print("☁️ Fetching moods from Cloud...")
+            moodService.fetchMoods(userID: uid)
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        print("❌ Failed to fetch moods from Cloud: \(error.localizedDescription)")
+                    }
+                } receiveValue: { [weak self] moods in
+                    self?.moodCheckIns = moods
+                    print("✅ Fetched \(moods.count) moods from Cloud")
+                }
+                .store(in: &cancellables)
+        } else {
+            print("📱 Loading moods locally (Decrypted)...")
+            loadMoodsLocally()
+        }
+    }
+    
+    // MARK: - Local Mood Persistence (Encrypted)
+    
+    private func saveMoodsLocally() {
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(moodCheckIns)
+            
+            if let encryptedData = EncryptionService.shared.encrypt(data: data) {
+                UserDefaults.standard.set(encryptedData, forKey: "moodCheckIns")
+                print("🔒 Moods encrypted and saved locally")
+            }
+        } catch {
+            print("❌ Failed to encode moods: \(error)")
+        }
+    }
+    
+    private func loadMoodsLocally() {
+        guard let encryptedData = UserDefaults.standard.data(forKey: "moodCheckIns") else { return }
+        
+        guard let data = EncryptionService.shared.decrypt(data: encryptedData) else {
+            print("❌ Failed to decrypt moods")
+            return
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            moodCheckIns = try decoder.decode([MoodCheckIn].self, from: data)
+            print("🔓 Moods decrypted and loaded locally")
+        } catch {
+            print("❌ Failed to decode moods: \(error)")
+        }
     }
     
     func addEmergencyContact(_ contact: EmergencyContact) {
@@ -59,27 +145,76 @@ class MamaCareViewModel: ObservableObject {
 
     
     func completeOnboarding(with user: User, storage: StorageMode?, wantsReminders: Bool) {
-
-            currentUser = user
-            currentUser?.storageMode = storage ?? .deviceOnly  // Use deviceOnly as fallback
-            currentUser?.notificationsWanted = wantsReminders
-            currentUser?.privacyAcceptedAt = Date()
-
-            hasCompletedOnboarding = true
-            UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
-            
-            // Save user data to UserDefaults
-            saveUserData()
-            
-            // Refresh data based on new user profile
-            loadVaccinesFromJSON()
-
-            login()
-        }
+        // Prepare user object
+        var newUser = user
+        newUser.storageMode = storage ?? .deviceOnly
+        newUser.notificationsWanted = wantsReminders
+        newUser.privacyAcceptedAt = Date()
+        
+        // We need a password to create the account. 
+        // NOTE: The current User struct does NOT have a password field.
+        // The OnboardingViewModel has the password.
+        // We need to pass the password to this function or handle it differently.
+        // For now, I will assume the password needs to be passed here.
+        // Since I cannot change the signature easily without breaking calls, 
+        // I will check if I can access it or if I need to update the call site.
+        // The call site in CreateAccountFlowView uses onboardingVM.user, but onboardingVM has the password.
+        
+        // Wait, I need to update the signature of completeOnboarding to accept password.
+        // But first, let's just put a placeholder or fix the call site in the next step.
+        // Actually, I should update the signature now.
+    }
+    
+    func completeOnboarding(with user: User, password: String, storage: StorageMode?, wantsReminders: Bool) {
+        print("🔄 Starting Onboarding (Hybrid Mode)...")
+        
+        // Common user setup
+        var finalUser = user
+        finalUser.storageMode = storage ?? .deviceOnly
+        finalUser.notificationsWanted = wantsReminders
+        finalUser.privacyAcceptedAt = Date()
+        
+        // 1. Always create Firebase Account
+        print("☁️ Creating Firebase Auth account...")
+        authService.signUp(email: user.email, password: password)
+            .flatMap { result -> Future<Void, Error> in
+                print("✅ Firebase Auth successful. UID: \(result.user.uid)")
+                
+                // 2. Check Storage Mode
+                if finalUser.storageMode == .cloud {
+                    print("☁️ Storage is Cloud: Saving to Firestore...")
+                    return self.userService.createUserProfile(user: finalUser, uid: result.user.uid)
+                } else {
+                    print("📱 Storage is Device-Only: Skipping Firestore...")
+                    // Return success immediately without saving to Firestore
+                    return Future { promise in promise(.success(())) }
+                }
+            }
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("❌ Onboarding failed: \(error.localizedDescription)")
+                    // Handle error
+                case .finished:
+                    print("✅ Onboarding completed successfully")
+                }
+            } receiveValue: { _ in
+                // 3. Handle Local Persistence for Device-Only (Cloud mode handles it in login/fetch)
+                if finalUser.storageMode == .deviceOnly {
+                    print("💾 Saving data locally for Device-Only user")
+                    self.currentUser = finalUser
+                    self.saveUserData() // Encrypted save
+                }
+                
+                self.login()
+            }
+            .store(in: &cancellables)
+    }
     
     // MARK: - User Data Persistence
     
-    /// Save current user data to UserDefaults
+    /// Save current user data to UserDefaults (Encrypted)
     private func saveUserData() {
         guard let user = currentUser else {
             print("⚠️ No user to save")
@@ -89,49 +224,122 @@ class MamaCareViewModel: ObservableObject {
         do {
             let encoder = JSONEncoder()
             let data = try encoder.encode(user)
-            UserDefaults.standard.set(data, forKey: "currentUser")
-            print("✅ User data saved successfully")
+            
+            // Encrypt data before saving
+            if let encryptedData = EncryptionService.shared.encrypt(data: data) {
+                UserDefaults.standard.set(encryptedData, forKey: "currentUser")
+                print("🔒 User data encrypted and saved successfully")
+            } else {
+                print("❌ Failed to encrypt user data")
+            }
         } catch {
-            print("❌ Failed to save user data: \(error)")
+            print("❌ Failed to encode user data: \(error)")
         }
     }
     
-    /// Load user data from UserDefaults
+    /// Load user data from UserDefaults (Decrypted)
     private func loadUserData() {
-        guard let data = UserDefaults.standard.data(forKey: "currentUser") else {
+        guard let encryptedData = UserDefaults.standard.data(forKey: "currentUser") else {
             print("⚠️ No saved user data found")
+            return
+        }
+        
+        // Decrypt data
+        guard let data = EncryptionService.shared.decrypt(data: encryptedData) else {
+            print("❌ Failed to decrypt user data")
             return
         }
         
         do {
             let decoder = JSONDecoder()
             currentUser = try decoder.decode(User.self, from: data)
-            print("✅ User data loaded successfully")
+            print("🔓 User data decrypted and loaded successfully")
             print("   User type: \(currentUser?.userType?.rawValue ?? "nil")")
-            print("   Birth date: \(currentUser?.birthDate?.description ?? "nil")")
-            print("   Expected delivery date: \(currentUser?.expectedDeliveryDate?.description ?? "nil")")
-            print("   Needs onboarding: \(currentUser?.needsOnboarding ?? true)")
         } catch {
-            print("❌ Failed to load user data: \(error)")
+            print("❌ Failed to decode user data: \(error)")
         }
     }
 
         // MARK: - App Login State
 
+        func login(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+            print("🔄 Attempting login for \(email)")
+            authService.signIn(email: email, password: password)
+                .receive(on: DispatchQueue.main)
+                .sink { result in
+                    if case .failure(let error) = result {
+                        print("❌ Login failed: \(error.localizedDescription)")
+                        completion(.failure(error))
+                    }
+                } receiveValue: { [weak self] _ in
+                    print("✅ Login successful, fetching profile...")
+                    self?.login() // Fetch profile
+                    completion(.success(()))
+                }
+                .store(in: &cancellables)
+        }
+
         func login() {
-            isLoggedIn = true
-            UserDefaults.standard.set(true, forKey: "isLoggedIn")
+            guard let uid = authService.currentUser?.uid else {
+                print("⚠️ No current Firebase user")
+                return
+            }
+            
+            print("🔄 Fetching user profile for UID: \(uid)")
+            userService.fetchUser(uid: uid)
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        print("⚠️ Failed to fetch from Cloud: \(error.localizedDescription)")
+                        print("🔄 Attempting fallback to Local Storage...")
+                        
+                        // Fallback: Try to load local data
+                        self.loadUserData()
+                        
+                        if self.currentUser != nil {
+                            print("✅ Found local data. Logging in as Device-Only user.")
+                            self.isLoggedIn = true
+                            self.hasCompletedOnboarding = true
+                            UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                            UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
+                            self.loadVaccinesFromJSON()
+                            self.fetchMoodCheckIns() // Load local moods
+                        } else {
+                            print("⚠️ No local data found either. User has an account but no data on this device.")
+                            // Still log them in, but they might need to set up profile?
+                            // For now, let's mark as logged in but maybe handle empty user state in UI
+                            self.isLoggedIn = true
+                            UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                        }
+                    }
+                } receiveValue: { [weak self] user in
+                    print("✅ Found Cloud data. Logging in as Cloud user.")
+                    self?.currentUser = user
+                    self?.isLoggedIn = true
+                    self?.hasCompletedOnboarding = true
+                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                    UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
+                    self?.saveUserData() // Update local cache
+                    self?.loadVaccinesFromJSON()
+                    self?.fetchMoodCheckIns() // Fetch moods
+                }
+                .store(in: &cancellables)
         }
 
         func logout() {
-        isLoggedIn = false
-        // currentUser = nil // Keep user data for re-login
-        // hasCompletedOnboarding = false // Keep onboarding status
-        UserDefaults.standard.set(false, forKey: "isLoggedIn")
-        // UserDefaults.standard.set(false, forKey: "hasCompletedOnboarding") // Keep onboarding status
-        // UserDefaults.standard.removeObject(forKey: "currentUser")  // Keep saved user data
-        print("✅ User logged out successfully (data persisted)")
-    }
+            do {
+                try authService.signOut()
+                isLoggedIn = false
+                currentUser = nil
+                hasCompletedOnboarding = false
+                UserDefaults.standard.set(false, forKey: "isLoggedIn")
+                UserDefaults.standard.set(false, forKey: "hasCompletedOnboarding")
+                UserDefaults.standard.removeObject(forKey: "currentUser")
+                print("✅ User logged out successfully")
+            } catch {
+                print("❌ Logout failed: \(error.localizedDescription)")
+            }
+        }
 
         // MARK: - Helpers
 

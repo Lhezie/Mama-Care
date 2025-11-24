@@ -162,7 +162,8 @@ struct MoodCheckInView: View {
         guard let mood = selectedMood else { return }
         
         // Save to ViewModel
-        viewModel.addMoodCheckIn(mood, notes: notes.isEmpty ? nil : notes)
+        let checkIn = MoodCheckIn(moodType: mood, notes: notes.isEmpty ? nil : notes)
+        viewModel.addMoodCheckIn(checkIn)
         
         // Trigger Navigation
         switch mood {

@@ -133,6 +133,7 @@ struct CreateAccountFlowView: View {
                     print("✅ CreateAccountFlowView - Completing onboarding")
                     viewModel.completeOnboarding(
                         with: onboardingVM.user,
+                        password: onboardingVM.password,
                         storage: onboardingVM.storageOption,
                         wantsReminders: onboardingVM.wantsReminders
                     )

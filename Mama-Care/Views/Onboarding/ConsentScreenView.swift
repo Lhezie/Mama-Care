@@ -297,10 +297,10 @@ struct ConsentScreenView: View {
                             ConsentPoint(color: .red, text: "Data lost if device is lost")
                         ])
 
-                        storageCard(option: .iCloudSync, icon: "icloud", iconColor: Color(hex: "F3E8FF"), title: "iCloud Sync", points: [
+                        storageCard(option: .cloud, icon: "icloud", iconColor: Color(hex: "F3E8FF"), title: "Cloud (Firebase)", points: [
                             ConsentPoint(color: .green, text: "Access from multiple devices"),
                             ConsentPoint(color: .green, text: "Automatic backup"),
-                            ConsentPoint(color: .green, text: "Still encrypted end-to-end")
+                            ConsentPoint(color: .green, text: "Securely stored in Firebase")
                         ])
                     }
 
