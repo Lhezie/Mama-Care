@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import SwiftData
 
 @main
 struct MamaCareApp: App {
@@ -46,6 +47,7 @@ struct MamaCareApp: App {
                 }
             }
         }
+        .modelContainer(for: [UserProfile.self, MoodEntry.self, Contact.self])
     }
 }
 

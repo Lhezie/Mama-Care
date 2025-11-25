@@ -20,5 +20,51 @@
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4F8D1339-1332-4A4F-9F22-9E19803CC60D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mama-Care/Services/SwiftDataService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "fetchContacts(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4F8D1339-1332-4A4F-9F22-9E19803CC60D - b13305126ed7e3e0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mama_Care.SwiftDataService.fetchContacts(for: Mama_Care.UserProfile) -&gt; Swift.Array&lt;Mama_Care.Contact&gt;"
+                  moduleName = "Mama-Care.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/udodirim/Desktop/Masters/Project/Mama-Care/Mama-Care/Services/SwiftDataService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "171"
+                  endingLineNumber = "171">
+               </Location>
+               <Location
+                  uuid = "4F8D1339-1332-4A4F-9F22-9E19803CC60D - 18cf8a20697384a8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Mama_Care.Contact) -&gt; Swift.Bool in Mama_Care.SwiftDataService.fetchContacts(for: Mama_Care.UserProfile) -&gt; Swift.Array&lt;Mama_Care.Contact&gt;"
+                  moduleName = "Mama-Care.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/udodirim/Desktop/Masters/Project/Mama-Care/Mama-Care/Services/SwiftDataService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "171"
+                  endingLineNumber = "171">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

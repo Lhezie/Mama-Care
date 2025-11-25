@@ -21,20 +21,6 @@ class UserService {
         return Future { [weak self] promise in
             guard let self = self else { return }
             
-            // Ensure we have a user ID (usually from Auth)
-            // If the User struct doesn't store the Auth UID directly, we might need to pass it or rely on the ID being set.
-            // Assuming User.id is UUID, but for Firebase we usually use the Auth UID as the document ID.
-            // We'll need to handle this mapping. For now, let's assume we use the User.id.uuidString or a passed UID.
-            // Ideally, we should use the Auth UID.
-            
-            // Let's assume we want to store it under the user's ID.
-            // However, the User model uses UUID.
-            // Strategy: We will use the User struct as is, but when saving to Firestore,
-            // we should probably use the Auth UID as the document ID for easy retrieval.
-            
-            // For this implementation, I'll accept the User object and save it.
-            // But I need the Auth UID to key it correctly.
-            // I'll modify this to take the uid explicitly.
              
              do {
                  try self.db.collection("users").document(user.id.uuidString).setData(from: user) { error in
@@ -90,6 +76,43 @@ class UserService {
                     promise(.success(user))
                 } catch {
                     promise(.failure(error))
+                }
+            }
+        }
+    }
+    
+    // MARK: - Delete User Data
+    func deleteUserData(uid: String) -> Future<Void, Error> {
+        return Future { [weak self] promise in
+            guard let self = self else { return }
+            
+            let userRef = self.db.collection("users").document(uid)
+            
+            // First, delete all subcollections (e.g., moods)
+            userRef.collection("moods").getDocuments { snapshot, error in
+                if let error = error {
+                    promise(.failure(error))
+                    return
+                }
+                
+                // Delete all mood documents
+                let batch = self.db.batch()
+                snapshot?.documents.forEach { batch.deleteDocument($0.reference) }
+                
+                batch.commit { error in
+                    if let error = error {
+                        promise(.failure(error))
+                        return
+                    }
+                    
+                    // After deleting subcollections, delete the user document
+                    userRef.delete { error in
+                        if let error = error {
+                            promise(.failure(error))
+                        } else {
+                            promise(.success(()))
+                        }
+                    }
                 }
             }
         }

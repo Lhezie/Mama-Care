@@ -45,6 +45,24 @@ class AuthService {
         try Auth.auth().signOut()
     }
     
+    // MARK: - Delete Account
+    func deleteAccount() -> Future<Void, Error> {
+        return Future { promise in
+            guard let user = Auth.auth().currentUser else {
+                promise(.failure(NSError(domain: "AuthService", code: 401, userInfo: [NSLocalizedDescriptionKey: "No authenticated user"])))
+                return
+            }
+            
+            user.delete { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
+            }
+        }
+    }
+    
     // MARK: - Current User
     var currentUser: FirebaseAuth.User? {
         return Auth.auth().currentUser

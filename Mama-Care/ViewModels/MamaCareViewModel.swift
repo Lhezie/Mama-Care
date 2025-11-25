@@ -9,7 +9,9 @@
 import Foundation
 import SwiftUI
 import Combine
+import SwiftData
 
+@MainActor
 class MamaCareViewModel: ObservableObject {
     @Published var currentUser: User?
     private var cancellables = Set<AnyCancellable>()
@@ -18,6 +20,10 @@ class MamaCareViewModel: ObservableObject {
     private let authService = AuthService.shared
     private let userService = UserService.shared
     private let moodService = MoodService.shared
+    private let swiftDataService = SwiftDataService.shared
+    private let migrationService = DataMigrationService.shared
+    let notificationService = NotificationService.shared
+    
        @Published var emergencyContacts: [EmergencyContact] = []
        @Published var moodCheckIns: [MoodCheckIn] = []
        @Published var vaccines: [Vaccine] = []
@@ -38,12 +44,32 @@ class MamaCareViewModel: ObservableObject {
        init() {
            self.isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
            
+           // Check if migration is needed
+           Task {
+               await performMigrationIfNeeded()
+           }
+           
            // Load user's data from storage (if they've completed onboarding)
            loadUserData()
            
            // Load JSON data (nutrition, vaccines, postpartum tips)
            loadJSONData()
        }
+    
+     // MARK: - Migration
+    
+    private func performMigrationIfNeeded() async {
+        if migrationService.needsMigration() {
+            do {
+                try await migrationService.performMigration()
+                print("✅ Migration completed")
+                // Reload data from SwiftData
+                loadUserData()
+            } catch {
+                print("❌ Migration failed: \(error)")
+            }
+        }
+    }
     
      // MARK: - Mood Check-In Logic
     
@@ -68,8 +94,8 @@ class MamaCareViewModel: ObservableObject {
                 }
                 .store(in: &cancellables)
         } else {
-            print("📱 Saving mood locally (Encrypted)...")
-            saveMoodsLocally()
+            print("📱 Saving mood locally (SwiftData)...")
+            saveMoodsToSwiftData(checkIn)
         }
     }
     
@@ -91,42 +117,38 @@ class MamaCareViewModel: ObservableObject {
                 }
                 .store(in: &cancellables)
         } else {
-            print("📱 Loading moods locally (Decrypted)...")
-            loadMoodsLocally()
+            print("📱 Loading moods from SwiftData...")
+            loadMoodsFromSwiftData()
         }
     }
     
-    // MARK: - Local Mood Persistence (Encrypted)
+    // MARK: - SwiftData Mood Persistence
     
-    private func saveMoodsLocally() {
-        do {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(moodCheckIns)
-            
-            if let encryptedData = EncryptionService.shared.encrypt(data: data) {
-                UserDefaults.standard.set(encryptedData, forKey: "moodCheckIns")
-                print("🔒 Moods encrypted and saved locally")
-            }
-        } catch {
-            print("❌ Failed to encode moods: \(error)")
-        }
-    }
-    
-    private func loadMoodsLocally() {
-        guard let encryptedData = UserDefaults.standard.data(forKey: "moodCheckIns") else { return }
-        
-        guard let data = EncryptionService.shared.decrypt(data: encryptedData) else {
-            print("❌ Failed to decrypt moods")
+    private func saveMoodsToSwiftData(_ checkIn: MoodCheckIn) {
+        guard let userProfile = swiftDataService.fetchUserProfile() else {
+            print("⚠️ No user profile found in SwiftData")
             return
         }
         
+        let entry = MoodEntry.from(checkIn, user: userProfile)
+        
         do {
-            let decoder = JSONDecoder()
-            moodCheckIns = try decoder.decode([MoodCheckIn].self, from: data)
-            print("🔓 Moods decrypted and loaded locally")
+            try swiftDataService.saveMoodEntry(entry)
+            print("✅ Mood saved to SwiftData (encrypted)")
         } catch {
-            print("❌ Failed to decode moods: \(error)")
+            print("❌ Failed to save mood to SwiftData: \(error)")
         }
+    }
+    
+    private func loadMoodsFromSwiftData() {
+        guard let userProfile = swiftDataService.fetchUserProfile() else {
+            print("⚠️ No user profile found in SwiftData")
+            return
+        }
+        
+        let entries = swiftDataService.fetchMoodEntries(for: userProfile)
+        moodCheckIns = entries.map { $0.toMoodCheckIn() }
+        print("✅ Loaded \(moodCheckIns.count) moods from SwiftData")
     }
     
     func addEmergencyContact(_ contact: EmergencyContact) {
@@ -207,6 +229,17 @@ class MamaCareViewModel: ObservableObject {
                     self.saveUserData() // Encrypted save
                 }
                 
+                // 4. Setup notifications if user wants reminders
+                if wantsReminders {
+                    Task {
+                        let granted = await self.notificationService.requestAuthorization()
+                        if granted {
+                            self.notificationService.scheduleMoodCheckInNotifications()
+                            print("✅ Mood check-in notifications scheduled")
+                        }
+                    }
+                }
+                
                 self.login()
             }
             .store(in: &cancellables)
@@ -214,31 +247,63 @@ class MamaCareViewModel: ObservableObject {
     
     // MARK: - User Data Persistence
     
-    /// Save current user data to UserDefaults (Encrypted)
+    /// Save current user data to SwiftData
     private func saveUserData() {
         guard let user = currentUser else {
             print("⚠️ No user to save")
             return
         }
         
-        do {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(user)
+        // Check if user profile already exists
+        if let existingProfile = swiftDataService.fetchUserProfile() {
+            // Update existing profile
+            existingProfile.firstName = user.firstName
+            existingProfile.lastName = user.lastName
+            existingProfile.email = user.email
+            existingProfile.country = user.country
+            existingProfile.mobileNumber = user.mobileNumber
+            existingProfile.userType = user.userType
+            existingProfile.expectedDeliveryDate = user.expectedDeliveryDate
+            existingProfile.birthDate = user.birthDate
+            existingProfile.storageMode = user.storageMode
+            existingProfile.privacyAcceptedAt = user.privacyAcceptedAt
+            existingProfile.notificationsWanted = user.notificationsWanted
             
-            // Encrypt data before saving
-            if let encryptedData = EncryptionService.shared.encrypt(data: data) {
-                UserDefaults.standard.set(encryptedData, forKey: "currentUser")
-                print("🔒 User data encrypted and saved successfully")
-            } else {
-                print("❌ Failed to encrypt user data")
+            do {
+                try swiftDataService.updateUserProfile(existingProfile)
+                print("✅ User profile updated in SwiftData")
+            } catch {
+                print("❌ Failed to update user profile: \(error)")
             }
-        } catch {
-            print("❌ Failed to encode user data: \(error)")
+        } else {
+            // Create new profile
+            let profile = UserProfile.from(user)
+            
+            do {
+                try swiftDataService.saveUserProfile(profile)
+                print("✅ User profile saved to SwiftData")
+            } catch {
+                print("❌ Failed to save user profile: \(error)")
+            }
         }
     }
     
-    /// Load user data from UserDefaults (Decrypted)
+    /// Load user data from SwiftData (with UserDefaults fallback for migration)
     private func loadUserData() {
+        // Try loading from SwiftData first
+        if let userProfile = swiftDataService.fetchUserProfile() {
+            currentUser = userProfile.toUser()
+            print("✅ User data loaded from SwiftData")
+            print("   User type: \(currentUser?.userType?.rawValue ?? "nil")")
+            
+            // Load moods if device-only
+            if currentUser?.storageMode == .deviceOnly {
+                loadMoodsFromSwiftData()
+            }
+            return
+        }
+        
+        // Fallback to UserDefaults (for migration)
         guard let encryptedData = UserDefaults.standard.data(forKey: "currentUser") else {
             print("⚠️ No saved user data found")
             return
@@ -253,7 +318,7 @@ class MamaCareViewModel: ObservableObject {
         do {
             let decoder = JSONDecoder()
             currentUser = try decoder.decode(User.self, from: data)
-            print("🔓 User data decrypted and loaded successfully")
+            print("🔓 User data decrypted and loaded from UserDefaults (legacy)")
             print("   User type: \(currentUser?.userType?.rawValue ?? "nil")")
         } catch {
             print("❌ Failed to decode user data: \(error)")
@@ -334,11 +399,101 @@ class MamaCareViewModel: ObservableObject {
                 hasCompletedOnboarding = false
                 UserDefaults.standard.set(false, forKey: "isLoggedIn")
                 UserDefaults.standard.set(false, forKey: "hasCompletedOnboarding")
-                UserDefaults.standard.removeObject(forKey: "currentUser")
-                print("✅ User logged out successfully")
+                // NOTE: We do NOT delete local data here
+                // This allows both device-only and cloud users to keep their data
+                // Logout effectively "locks" the app for privacy
+                print("✅ User logged out (data preserved)")
             } catch {
                 print("❌ Logout failed: \(error.localizedDescription)")
             }
+        }
+        
+        // MARK: - Delete Account
+        
+        func deleteAccount(completion: @escaping (Result<Void, Error>) -> Void) {
+            guard let user = currentUser else {
+                completion(.failure(NSError(domain: "MamaCareViewModel", code: 400, userInfo: [NSLocalizedDescriptionKey: "No user to delete"])))
+                return
+            }
+            
+            print("🗑️ Starting account deletion...")
+            
+            // Step 1: Delete Firestore data (if cloud user)
+            if user.storageMode == .cloud, let uid = authService.currentUser?.uid {
+                print("☁️ Deleting cloud data...")
+                userService.deleteUserData(uid: uid)
+                    .flatMap { _ -> Future<Void, Error> in
+                        print("✅ Cloud data deleted")
+                        // Step 2: Delete Firebase Auth account
+                        print("🔐 Deleting Firebase Auth account...")
+                        return self.authService.deleteAccount()
+                    }
+                    .receive(on: DispatchQueue.main)
+                    .sink { result in
+                        switch result {
+                        case .failure(let error):
+                            print("❌ Account deletion failed: \(error.localizedDescription)")
+                            completion(.failure(error))
+                        case .finished:
+                            print("✅ Firebase Auth account deleted")
+                            // Step 3: Clear all local data
+                            self.clearAllLocalData()
+                            completion(.success(()))
+                        }
+                    } receiveValue: { _ in
+                        // Success handled in completion
+                    }
+                    .store(in: &cancellables)
+            } else {
+                // Device-only user: Just delete Firebase Auth and local data
+                print("📱 Device-only user: Deleting auth and local data...")
+                authService.deleteAccount()
+                    .receive(on: DispatchQueue.main)
+                    .sink { result in
+                        switch result {
+                        case .failure(let error):
+                            print("❌ Account deletion failed: \(error.localizedDescription)")
+                            completion(.failure(error))
+                        case .finished:
+                            print("✅ Firebase Auth account deleted")
+                            // Clear all local data
+                            self.clearAllLocalData()
+                            completion(.success(()))
+                        }
+                    } receiveValue: { _ in
+                        // Success handled in completion
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+        
+        // MARK: - Clear Local Data
+        
+        private func clearAllLocalData() {
+            print("🧹 Clearing all local data...")
+            
+            // Clear user data
+            currentUser = nil
+            isLoggedIn = false
+            hasCompletedOnboarding = false
+            moodCheckIns = []
+            emergencyContacts = []
+            
+            // Clear SwiftData
+            do {
+                try swiftDataService.deleteAllData()
+                print("✅ SwiftData cleared")
+            } catch {
+                print("❌ Failed to clear SwiftData: \(error)")
+            }
+            
+            // Clear UserDefaults (legacy)
+            UserDefaults.standard.removeObject(forKey: "currentUser")
+            UserDefaults.standard.removeObject(forKey: "moodCheckIns")
+            UserDefaults.standard.set(false, forKey: "isLoggedIn")
+            UserDefaults.standard.set(false, forKey: "hasCompletedOnboarding")
+            
+            print("✅ All local data cleared")
         }
 
         // MARK: - Helpers
@@ -376,12 +531,68 @@ class MamaCareViewModel: ObservableObject {
         print("Scheduling daily reminders at 08:00, 14:00, 20:00")
     }
     
+    // MARK: - Profile Updates
+    
+    func updateProfile(firstName: String, lastName: String, mobileNumber: String) {
+        guard var user = currentUser else { return }
+        
+        user.firstName = firstName
+        user.lastName = lastName
+        user.mobileNumber = mobileNumber
+        
+        currentUser = user
+        saveUserData()
+        
+        // Update in Firebase if cloud user
+        if user.storageMode == .cloud, let uid = authService.currentUser?.uid {
+            userService.createUserProfile(user: user, uid: uid)
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        print("❌ Failed to update profile in Firebase: \(error)")
+                    }
+                } receiveValue: {
+                    print("✅ Profile updated in Firebase")
+                }
+                .store(in: &cancellables)
+        }
+        
+        print("✅ Profile updated locally")
+    }
+    
+    func updateNotificationPreference(enabled: Bool) {
+        guard var user = currentUser else { return }
+        
+        user.notificationsWanted = enabled
+        currentUser = user
+        saveUserData()
+        
+        // Update in Firebase if cloud user
+        if user.storageMode == .cloud, let uid = authService.currentUser?.uid {
+            userService.createUserProfile(user: user, uid: uid)
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        print("❌ Failed to update notification preference in Firebase: \(error)")
+                    }
+                } receiveValue: {
+                    print("✅ Notification preference updated in Firebase")
+                }
+                .store(in: &cancellables)
+        }
+        
+        print("✅ Notification preference updated: \(enabled)")
+    }
+    
     // MARK: - Vaccine Management
     
     func markVaccineAsCompleted(_ vaccine: VaccineItem) {
         if let index = vaccineSchedule.firstIndex(where: { $0.id == vaccine.id }) {
             vaccineSchedule[index].status = .completed
             vaccineSchedule[index].completedDate = Date()
+            
+            // Cancel the reminder notification
+            notificationService.cancelVaccineReminder(for: vaccine.id)
         }
     }
     
@@ -645,6 +856,11 @@ class MamaCareViewModel: ObservableObject {
         
         print("✅ Loaded \(vaccines.count) vaccines from \(country) schedule")
         self.vaccineSchedule = vaccines
+        
+        // Schedule vaccine reminders if notifications are enabled
+        if currentUser?.notificationsWanted == true {
+            notificationService.scheduleVaccineReminders(for: vaccines)
+        }
     }
     
     private func determineVaccineStatus(dueDate: Date?) -> VaccineStatus {

@@ -89,4 +89,16 @@ class EncryptionService {
             return nil
         }
     }
+    
+    // MARK: - String Encryption (for SwiftData fields)
+    
+    func encryptString(_ string: String) -> Data? {
+        guard let data = string.data(using: .utf8) else { return nil }
+        return encrypt(data: data)
+    }
+    
+    func decryptString(_ data: Data) -> String? {
+        guard let decryptedData = decrypt(data: data) else { return nil }
+        return String(data: decryptedData, encoding: .utf8)
+    }
 }
