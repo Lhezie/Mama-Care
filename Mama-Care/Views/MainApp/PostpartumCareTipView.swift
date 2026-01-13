@@ -2,7 +2,7 @@
 //  PostpartumCareTipView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 19/11/2025.
+//  Created by Elizabeth Enechaziam on 19/11/2025.
 //
 
 import SwiftUI
@@ -48,20 +48,20 @@ struct PostpartumCareTipView: View {
         .ignoresSafeArea(edges: .top)
         .onAppear {
             // Reload postpartum data when view appears to ensure it's loaded
-            print("🔍 PostpartumCareTipView appeared")
+            print("PostpartumCareTipView appeared")
             print("   Days postpartum: \(daysPostpartum?.description ?? "nil")")
             print("   Current user type: \(viewModel.currentUser?.userType?.rawValue ?? "nil")")
             print("   Birth date: \(viewModel.currentUser?.birthDate?.description ?? "nil")")
             
             // Reload data if not already loaded
-            if viewModel.postpartumDays == nil {
-                print("⚠️ Postpartum data is nil, attempting to reload...")
+            if (viewModel.postpartumDays ?? []).isEmpty {
+                print("Postpartum data is missing, attempting to reload...")
                 viewModel.reloadPostpartumData()
             }
         }
     }
     
-    // MARK: - Header Section
+    //  Header Section
     private var headerSection: some View {
         ZStack {
             // Gradient background
@@ -105,7 +105,7 @@ struct PostpartumCareTipView: View {
         .frame(height: 120)
     }
     
-    // MARK: - Postpartum Badge
+    //  Postpartum Badge
     private func postpartumBadge(days: Int) -> some View {
         HStack(spacing: 8) {
             Image(systemName: "sparkles")
@@ -124,7 +124,7 @@ struct PostpartumCareTipView: View {
         }
     }
     
-    // MARK: - Gradient Progress Bar
+    //  Gradient Progress Bar
     private var gradientProgressBar: some View {
         RoundedRectangle(cornerRadius: 4)
             .fill(
@@ -141,7 +141,7 @@ struct PostpartumCareTipView: View {
             .frame(height: 8)
     }
     
-    // MARK: - Tip Content Section
+    //  Tip Content Section
     @ViewBuilder
     private var tipContentSection: some View {
         if let tip = postpartumTip, !tip.messages.isEmpty {
@@ -174,7 +174,7 @@ struct PostpartumCareTipView: View {
         }
     }
     
-    // MARK: - Quote Icon
+    //  Quote Icon
     private var pauseButton: some View {
         ZStack {
             Circle()
@@ -197,7 +197,7 @@ struct PostpartumCareTipView: View {
         }
     }
     
-    // MARK: - Dots Indicator
+    //  Dots Indicator
     private func dotsIndicator(tip: PostpartumDay) -> some View {
         HStack(spacing: 8) {
             ForEach(0..<tip.messages.count, id: \.self) { index in
@@ -213,7 +213,7 @@ struct PostpartumCareTipView: View {
         }
     }
     
-    // MARK: - Empty State
+    //  Empty State
     private var emptyStateView: some View {
         VStack(spacing: 20) {
             Image(systemName: "heart.fill")
@@ -241,7 +241,7 @@ struct PostpartumCareTipView: View {
     }
 }
 
-// MARK: - Preview
+//  Preview
 #Preview {
     PostpartumCareTipView()
         .environmentObject({

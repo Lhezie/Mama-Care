@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Nutrition Data Models
+//  Nutrition Data Models
 
 struct NutritionData: Codable {
     let meta: NutritionMeta

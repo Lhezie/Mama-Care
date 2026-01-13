@@ -2,12 +2,17 @@
 //  NotificationService.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 24/11/2025.
+//  Created by Elizabeth Enechaziam on 24/11/2025.
 //
 
 import Foundation
 import UserNotifications
 import SwiftUI
+
+extension Notification.Name {
+    static let navigateToMood = Notification.Name("NavigateToMood")
+    static let navigateToVaccines = Notification.Name("NavigateToVaccines")
+}
 
 @MainActor
 class NotificationService: NSObject, ObservableObject {
@@ -16,16 +21,13 @@ class NotificationService: NSObject, ObservableObject {
     @Published var isAuthorized = false
     private let notificationCenter = UNUserNotificationCenter.current()
     
-    // Default mood check-in times (24-hour format)
-    private let defaultMoodCheckInTimes = [8, 14, 20] // 08:00, 14:00, 20:00
-    
     override private init() {
         super.init()
         notificationCenter.delegate = self
         checkAuthorizationStatus()
     }
     
-    // MARK: - Authorization
+    //  Authorization
     
     func requestAuthorization() async -> Bool {
         do {
@@ -33,10 +35,10 @@ class NotificationService: NSObject, ObservableObject {
             await MainActor.run {
                 self.isAuthorized = granted
             }
-            print(granted ? "✅ Notification permission granted" : "❌ Notification permission denied")
+            print(granted ? " Notification permission granted" : "Notification permission denied")
             return granted
         } catch {
-            print("❌ Failed to request notification permission: \(error)")
+            print("Failed to request notification permission: \(error)")
             return false
         }
     }
@@ -50,57 +52,67 @@ class NotificationService: NSObject, ObservableObject {
         }
     }
     
-    // MARK: - Mood Check-In Notifications
+    //  Mood Check-In Notifications
     
     func scheduleMoodCheckInNotifications(times: [Int]? = nil) {
-        let checkInTimes = times ?? defaultMoodCheckInTimes
+        // times are in minutes since midnight (e.g., 480 = 08:00, 840 = 14:00)
+        let checkInTimes = times ?? [480, 840, 1200] // Default: 08:00, 14:00, 20:00
         
         // Cancel existing mood notifications
         cancelMoodCheckInNotifications()
         
-        for hour in checkInTimes {
-            scheduleMoodNotification(at: hour)
+        for minutesSinceMidnight in checkInTimes {
+            scheduleMoodNotification(at: minutesSinceMidnight)
         }
         
-        print("✅ Scheduled \(checkInTimes.count) mood check-in notifications")
+        print("Scheduled \(checkInTimes.count) mood check-in notifications")
     }
     
-    private func scheduleMoodNotification(at hour: Int) {
+    private func scheduleMoodNotification(at minutesSinceMidnight: Int) {
+        let hour = minutesSinceMidnight / 60
+        let minute = minutesSinceMidnight % 60
+        
         let content = UNMutableNotificationContent()
         content.title = "Daily Mood Check-In"
         content.body = "How are you feeling today? Take a moment to check in with yourself."
         content.sound = .default
         content.categoryIdentifier = "MOOD_CHECKIN"
         
-        // Schedule for specific hour every day
+        // Schedule for specific hour and minute every day
         var dateComponents = DateComponents()
         dateComponents.hour = hour
-        dateComponents.minute = 0
+        dateComponents.minute = minute
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        let identifier = "mood-checkin-\(hour)"
+        let identifier = "mood-checkin-\(minutesSinceMidnight)"
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
         notificationCenter.add(request) { error in
             if let error = error {
-                print("❌ Failed to schedule mood notification at \(hour):00 - \(error)")
+                print("Failed to schedule mood notification at \(String(format: "%02d:%02d", hour, minute)) - \(error)")
             } else {
-                print("✅ Scheduled mood notification at \(hour):00")
+                print("Scheduled mood notification at \(String(format: "%02d:%02d", hour, minute))")
             }
         }
     }
     
     func cancelMoodCheckInNotifications() {
-        let identifiers = defaultMoodCheckInTimes.map { "mood-checkin-\($0)" }
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: identifiers)
-        print("🗑️ Cancelled mood check-in notifications")
+        // Cancel all mood check-in notifications (they all start with "mood-checkin-")
+        notificationCenter.getPendingNotificationRequests { requests in
+            let moodIdentifiers = requests
+                .filter { $0.identifier.starts(with: "mood-checkin-") }
+                .map { $0.identifier }
+            
+            self.notificationCenter.removePendingNotificationRequests(withIdentifiers: moodIdentifiers)
+            print("🗑️ Cancelled \(moodIdentifiers.count) mood check-in notifications")
+        }
     }
     
-    // MARK: - Vaccine Reminder Notifications
+    //  Vaccine Reminder Notifications
     
     func scheduleVaccineReminder(for vaccine: VaccineItem) {
         guard let dueDate = vaccine.dueDate else {
-            print("⚠️ No due date for vaccine: \(vaccine.name)")
+            print("No due date for vaccine: \(vaccine.name)")
             return
         }
         
@@ -108,7 +120,7 @@ class NotificationService: NSObject, ObservableObject {
         let reminderDate = Calendar.current.date(byAdding: .day, value: -1, to: dueDate)
         
         guard let reminderDate = reminderDate, reminderDate > Date() else {
-            print("⚠️ Reminder date is in the past for vaccine: \(vaccine.name)")
+            print("Reminder date is in the past for vaccine: \(vaccine.name)")
             return
         }
         
@@ -127,9 +139,9 @@ class NotificationService: NSObject, ObservableObject {
         
         notificationCenter.add(request) { error in
             if let error = error {
-                print("❌ Failed to schedule vaccine reminder for \(vaccine.name) - \(error)")
+                print("Failed to schedule vaccine reminder for \(vaccine.name) - \(error)")
             } else {
-                print("✅ Scheduled vaccine reminder for \(vaccine.name) on \(reminderDate)")
+                print("Scheduled vaccine reminder for \(vaccine.name) on \(reminderDate)")
             }
         }
     }
@@ -144,7 +156,7 @@ class NotificationService: NSObject, ObservableObject {
             scheduleVaccineReminder(for: vaccine)
         }
         
-        print("✅ Scheduled reminders for \(vaccinesToSchedule.count) vaccines")
+        print("Scheduled reminders for \(vaccinesToSchedule.count) vaccines")
     }
     
     func cancelVaccineReminder(for vaccineId: UUID) {
@@ -164,14 +176,14 @@ class NotificationService: NSObject, ObservableObject {
         }
     }
     
-    // MARK: - Cancel All Notifications
+    //  Cancel All Notifications
     
     func cancelAllNotifications() {
         notificationCenter.removeAllPendingNotificationRequests()
         print("🗑️ Cancelled all notifications")
     }
     
-    // MARK: - Debug
+    //  Debug
     
     func listPendingNotifications() {
         notificationCenter.getPendingNotificationRequests { requests in
@@ -183,7 +195,7 @@ class NotificationService: NSObject, ObservableObject {
     }
 }
 
-// MARK: - UNUserNotificationCenterDelegate
+//  UNUserNotificationCenterDelegate
 
 extension NotificationService: UNUserNotificationCenterDelegate {
     // Handle notification when app is in foreground
@@ -205,12 +217,13 @@ extension NotificationService: UNUserNotificationCenterDelegate {
         let identifier = response.notification.request.identifier
         
         if identifier.starts(with: "mood-checkin") {
-            print("📱 User tapped mood check-in notification")
+            print("User tapped mood check-in notification")
             // Navigate to mood check-in view
-            // This would be handled by the app's navigation logic
+            NotificationCenter.default.post(name: .navigateToMood, object: nil)
         } else if identifier.starts(with: "vaccine-") {
-            print("📱 User tapped vaccine reminder notification")
+            print("User tapped vaccine reminder notification")
             // Navigate to vaccine schedule view
+            NotificationCenter.default.post(name: .navigateToVaccines, object: nil)
         }
         
         completionHandler()

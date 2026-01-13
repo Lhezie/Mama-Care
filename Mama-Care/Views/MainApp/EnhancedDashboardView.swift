@@ -2,7 +2,7 @@
 //  EnhancedDashboardView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 03/11/2025.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
 
 import SwiftUI
@@ -11,31 +11,48 @@ struct EnhancedDashboardView: View {
     @EnvironmentObject var viewModel: MamaCareViewModel
   
     @Binding var selectedTab: Int
+    @State private var showCalmingAudio = false
+    @State private var showPremiumAlert = false
+    @State private var showSubscriptionSheet = false
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 0) {
+                    // Offline Indicator Banner
+                    if viewModel.isOffline {
+                        HStack {
+                            Image(systemName: "wifi.slash")
+                            Text("Offline - using last synced data")
+                                .font(.caption.bold())
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .background(Color.mamaCareOrange)
+                        .foregroundColor(.white)
+                        .transition(.move(edge: .top))
+                    }
+                    
                     // Header with Gradient Background
-                    headerSection
+                    headerSection 
                     
                     VStack(spacing: 24) {
-                        // Pregnancy Progress Card (Overlapping Header)
-                        pregnancyProgressSection
-                            .offset(y: -40)
-                            .padding(.bottom, -40)
+                        // Progress Card (Overlapping Header)
+                        if viewModel.currentUser?.userType == .pregnant {
+                            pregnancyProgressSection
+                                .offset(y: -40)
+                                .padding(.bottom, -40)
+                        } else if viewModel.currentUser?.userType == .hasChild {
+                            postpartumProgressSection
+                                .offset(y: -40)
+                                .padding(.bottom, -40)
+                        }
                         
                         // Quick Actions
                         quickActionsSection
                         
                         // Mood Trend Chart
                         moodTrendSection
-                        
-                        // Postpartum Tips (Optional, keeping as per previous code but maybe simplified)
-                        // postpartumTipsSection
-                        
-                        // Nutrition Plan (Optional, keeping as per previous code)
-                        // nutritionPlanSection
                     }
                     .padding(.bottom, 20)
                 }
@@ -89,13 +106,13 @@ struct EnhancedDashboardView: View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Week 15 of 40")
+                    Text("Week \(viewModel.currentUser?.pregnancyWeek ?? 0) of 40")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(.white)
-                    
-                    Text("Your baby is the size of a apple")
-                        .font(.system(size: 16))
-                        .foregroundColor(.white.opacity(0.9))
+//                    
+//                    Text("Your baby is the size of a a")
+//                        .font(.system(size: 16))
+//                        .foregroundColor(.white.opacity(0.9))
                 }
                 
                 Spacer()
@@ -114,7 +131,7 @@ struct EnhancedDashboardView: View {
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.8))
                     Spacer()
-                    Text("38%")
+                    Text("\(viewModel.pregnancyProgressPercentage)%")
                         .font(.caption)
                         .foregroundColor(.white.opacity(0.8))
                 }
@@ -124,18 +141,18 @@ struct EnhancedDashboardView: View {
                         Rectangle()
                             .frame(width: geometry.size.width, height: 8)
                             .opacity(0.3)
-                            .foregroundColor(.mamaCareDarkGreen) // Darker green background
+                            .foregroundColor(.mamaCareDarkGreen)
                             .cornerRadius(4)
                         
                         Rectangle()
-                            .frame(width: geometry.size.width * 0.38, height: 8)
-                            .foregroundColor(.mamaCareDarkGreen) // Dark progress color
+                            .frame(width: geometry.size.width * CGFloat(viewModel.calculateProgress()), height: 8)
+                            .foregroundColor(.mamaCareDarkGreen)
                             .cornerRadius(4)
                     }
                 }
                 .frame(height: 8)
                 
-                Text("Approximately 25 weeks to go")
+                Text("Approximately \(viewModel.weeksRemaining) weeks to go")
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.8))
             }
@@ -153,17 +170,88 @@ struct EnhancedDashboardView: View {
         .padding(.horizontal)
     }
     
+    private var postpartumProgressSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            let days = viewModel.calculateDaysPostpartum() ?? 0
+            
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Day \(days)")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(.white)
+                    
+                    Text("Days with your little one")
+                        .font(.system(size: 16))
+                        .foregroundColor(.white.opacity(0.9))
+                }
+                
+                Spacer()
+                
+                Image(systemName: "figure.and.child")
+                    .font(.system(size: 40))
+                    .foregroundColor(.white)
+            }
+            
+            Spacer().frame(height: 20)
+            
+            Text("Remember to take care of yourself too, mama.")
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.8))
+        }
+        .padding(24)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.mamaCarePrimary, .mamaCarePrimaryDark]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+        .padding(.horizontal)
+    }
+    
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Quick Actions")
-                .font(.headline)
-                .foregroundColor(.mamaCareTextPrimary)
-                .padding(.horizontal)
+            HStack {
+                Text("Quick Actions")
+                    .font(.headline)
+                    .foregroundColor(.mamaCareTextPrimary)
+                
+                Spacer()
+                
+                Button(action: { showCalmingAudio = true }) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "waveform")
+                        Text("Calming")
+                            .font(.caption.bold())
+                    }
+                    .foregroundColor(.mamaCarePrimary)
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 10)
+                    .background(Color.mamaCarePrimaryLight)
+                    .cornerRadius(12)
+                }
+            }
+            .padding(.horizontal)
             
-            Text("You'll receive 3 daily reminders (08:00, 14:00, 20:00) for mood check-ins")
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .padding(.horizontal)
+            if let times = viewModel.currentUser?.checkInTimes, !times.isEmpty {
+                let formattedTimes = times.sorted().map { minutes -> String in
+                    let hour = minutes / 60
+                    let minute = minutes % 60
+                    return String(format: "%02d:%02d", hour, minute)
+                }.joined(separator: ", ")
+                
+                Text("You have set \(times.count) daily reminders (\(formattedTimes)) for mood check-ins")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal)
+            } else {
+                Text("You'll receive 3 daily reminders (08:00, 14:00, 20:00) for mood check-ins")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal)
+            }
             
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 2), spacing: 16) {
                 DashboardActionButton(
@@ -190,7 +278,11 @@ struct EnhancedDashboardView: View {
                     color: .mamaCareOverdue,
                     bgColor: .mamaCareRedLight
                 ) {
-                    selectedTab = 4 // Navigate to Emergency tab
+                    if viewModel.isPremium {
+                        selectedTab = 4
+                    } else {
+                        showPremiumAlert = true
+                    }
                 }
                 
                 DashboardActionButton(
@@ -203,6 +295,22 @@ struct EnhancedDashboardView: View {
                 }
             }
             .padding(.horizontal)
+        }
+        .sheet(isPresented: $showCalmingAudio) {
+            CalmingAudioView()
+                .environmentObject(viewModel)
+        }
+        .sheet(isPresented: $showSubscriptionSheet) {
+            PaywallView()
+                .environmentObject(viewModel)
+        }
+        .alert("Premium Feature", isPresented: $showPremiumAlert) {
+            Button("Subscribe", role: .none) {
+                showSubscriptionSheet = true
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("The Emergency Escalation feature requires a premium subscription. Please subscribe to access this safety tool.")
         }
     }
     
@@ -250,7 +358,7 @@ struct DashboardActionButton: View {
     }
 }
 
-// MARK: - Preview
+//  Preview
 #Preview {
     EnhancedDashboardView(selectedTab: .constant(0))
         .environmentObject({

@@ -2,7 +2,7 @@
 //  VaccineScheduleView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 19/11/2025.
+//  Created by Elizabeth Enechaziam on 19/11/2025.
 //
 
 import SwiftUI
@@ -10,12 +10,13 @@ import SwiftUI
 struct VaccineScheduleView: View {
     @EnvironmentObject var viewModel: MamaCareViewModel
     @State private var selectedFilter: VaccineFilter = .all
+    @State private var showDigitalCard = false
+    @State private var showNoVaccineAlert = false
     
     enum VaccineFilter: String, CaseIterable {
         case all = "All"
         case upcoming = "Upcoming"
         case due = "Due"
-        case overdue = "Overdue"
         case completed = "Completed"
     }
     
@@ -37,7 +38,25 @@ struct VaccineScheduleView: View {
                     
                     Spacer()
                     
-                    
+                    Button {
+                        if viewModel.vaccineSchedule.filter({ $0.status == .completed }).isEmpty {
+                            showNoVaccineAlert = true
+                        } else {
+                            showDigitalCard = true
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "qrcode")
+                            Text("View Card")
+                        }
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(Color.mamaCarePrimary.opacity(0.1))
+                        .foregroundColor(.mamaCarePrimary)
+                        .cornerRadius(20)
+                    }
                 }
                 .padding(.horizontal)
                 .padding(.top, 20)
@@ -92,7 +111,16 @@ struct VaccineScheduleView: View {
         }
         .onAppear {
             // Load vaccines from JSON when view appears
-            viewModel.loadVaccinesFromJSON()
+            viewModel.loadVaccines()
+        }
+        .sheet(isPresented: $showDigitalCard) {
+            DigitalVaccineCardView()
+                .environmentObject(viewModel)
+        }
+        .alert("No Completed Vaccines", isPresented: $showNoVaccineAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("No vaccine completed yet. Please mark a vaccine as completed to view your digital card.")
         }
     }
     
@@ -105,9 +133,8 @@ struct VaccineScheduleView: View {
         case .upcoming:
             return allVaccines.filter { $0.status == .upcoming }
         case .due:
-            return allVaccines.filter { $0.status == .due }
-        case .overdue:
-            return allVaccines.filter { $0.status == .overdue }
+            // Due tab should show Due/Overdue but hide Completed
+            return allVaccines.filter { ($0.status == .due || $0.status == .overdue) && $0.status != .completed }
         case .completed:
             return allVaccines.filter { $0.status == .completed }
         }
@@ -184,23 +211,24 @@ struct VaccineCard: View {
             }
             
             // Action Button
-            if vaccine.status != .completed && vaccine.status != .upcoming {
+            if vaccine.status != .completed {
                 Button {
                     viewModel.markVaccineAsCompleted(vaccine)
                 } label: {
                     HStack {
-                        Image(systemName: "checkmark.circle.fill")
-                        Text("Mark as Done")
+                        Image(systemName: vaccine.status == .upcoming ? "clock.fill" : "checkmark.circle.fill")
+                        Text(vaccine.status == .upcoming ? "Coming Soon" : "Mark as Done")
                     }
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.mamaCarePrimary)
+                    .background(vaccine.status == .upcoming ? Color.gray.opacity(0.5) : Color.mamaCarePrimary)
                     .cornerRadius(12)
                 }
-            } else if vaccine.status == .completed {
+                .disabled(vaccine.status == .upcoming)
+            } else {
                 HStack {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.mamaCareCompleted)
@@ -224,10 +252,8 @@ struct VaccineCard: View {
         switch vaccine.status {
         case .upcoming:
             return .mamaCareUpcoming // Blue
-        case .due:
+        case .due, .overdue:
             return .mamaCareDue // Orange
-        case .overdue:
-            return .mamaCareOverdue // Red
         case .completed:
             return .mamaCareCompleted // Green
         }
@@ -252,10 +278,8 @@ struct StatusBadge: View {
         switch status {
         case .upcoming:
             return .mamaCareUpcoming
-        case .due:
+        case .due, .overdue:
             return .mamaCareDue
-        case .overdue:
-            return .mamaCareOverdue
         case .completed:
             return .mamaCareCompleted
         }
@@ -265,17 +289,15 @@ struct StatusBadge: View {
         switch status {
         case .upcoming:
             return .mamaCareUpcomingBg
-        case .due:
+        case .due, .overdue:
             return .mamaCareDueBg
-        case .overdue:
-            return .mamaCareOverdueBg
         case .completed:
             return .mamaCareCompletedBg
         }
     }
 }
 
-// MARK: - Preview
+//  Preview
 #Preview {
     VaccineScheduleView()
         .environmentObject({

@@ -2,16 +2,16 @@
 //  PrimaryButtonStyle.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 03/11/2025.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
 
 
 // Update Views/Components/CustomStyles.swift
 import SwiftUI
 
-// MARK: - Custom Button Styles with your gradient
+//  Custom Button Styles with your gradient
 struct PrimaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
+    func makeBody(configuration: ButtonStyle.Configuration) -> some View {
         configuration.label
             .font(.headline)
             .foregroundColor(.white)
@@ -23,7 +23,7 @@ struct PrimaryButtonStyle: ButtonStyle {
 }
 
 struct SecondaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
+    func makeBody(configuration: ButtonStyle.Configuration) -> some View {
         configuration.label
             .font(.headline)
             .foregroundColor(Color.mamaCarePrimary)
@@ -36,7 +36,7 @@ struct SecondaryButtonStyle: ButtonStyle {
 
 
 struct TertiaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
+    func makeBody(configuration: ButtonStyle.Configuration) -> some View {
         configuration.label
             .font(.headline)
             .foregroundColor(.black)

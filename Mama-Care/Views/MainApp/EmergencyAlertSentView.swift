@@ -2,7 +2,7 @@
 //  EmergencyAlertSentView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 19/11/2025.
+//  Created by Elizabeth Enechaziam on 19/11/2025.
 //
 
 import SwiftUI

@@ -2,95 +2,162 @@
 //  AIChatView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 19/11/2025.
+//  Created by Elizabeth Enechaziam on 19/11/2025.
 //
 
 import SwiftUI
 
 struct AIChatView: View {
     @EnvironmentObject var viewModel: MamaCareViewModel
+    @Binding var isPresented: Bool
     @State private var messageText = ""
-    @State private var showDisclaimer = true
+    @AppStorage("hasAcknowledgedAIDisclaimer") private var hasAcknowledgedDisclaimer = false
     @FocusState private var isInputFocused: Bool
     
     var body: some View {
         NavigationView {
             ZStack {
                 VStack(spacing: 0) {
-                    // Header
-                    HStack {
-                        Button {
-                            // Back action
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .font(.title3)
-                                .foregroundColor(.mamaCareTextPrimary)
-                        }
-                        
-                        VStack(spacing: 2) {
-                            Text("AI Chat")
-                                .font(.headline)
-                                .foregroundColor(.mamaCareTextPrimary)
-                            
-                            Text("Your pregnancy companion")
-                                .font(.caption)
-                                .foregroundColor(.mamaCareTextSecondary)
-                        }
-                        
-                        Spacer()
-                        
-                        Button {
-                            // Info action
-                        } label: {
-                            Image(systemName: "info.circle")
-                                .font(.title3)
-                                .foregroundColor(.mamaCareTextPrimary)
-                        }
-                    }
-                    .padding()
-                    .background(Color.white)
-                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
-                    
-                    // Messages
-                    ScrollView {
-                        LazyVStack(spacing: 16) {
-                            ForEach(viewModel.chatMessages) { message in
-                                MessageBubble(message: message)
-                            }
-                        }
-                        .padding()
-                    }
-                    .background(Color.mamaCareGrayLight)
-                    
-                    // Input Area
-                    HStack(spacing: 12) {
-                        TextField("Type your message...", text: $messageText)
-                            .padding()
-                            .background(Color.mamaCareGrayMedium)
-                            .cornerRadius(24)
-                            .focused($isInputFocused)
-                        
-                        Button {
-                            sendMessage()
-                        } label: {
-                            Image(systemName: "arrow.up.circle.fill")
-                                .font(.system(size: 36))
-                                .foregroundColor(messageText.isEmpty ? .mamaCareTextTertiary : .mamaCarePrimary)
-                        }
-                        .disabled(messageText.isEmpty)
-                    }
-                    .padding()
-                    .background(Color.white)
+                    chatHeader
+                    messageList
+                    inputArea
                 }
                 
-                // Disclaimer Overlay
-                if showDisclaimer {
-                    DisclaimerOverlay {
-                        showDisclaimer = false
+                disclaimerOverlay
+            }
+            .navigationBarHidden(true)
+        }
+    }
+    
+    private var chatHeader: some View {
+        HStack {
+            Button {
+                isPresented = false
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.title3)
+                    .foregroundColor(.mamaCareTextPrimary)
+            }
+            
+            VStack(spacing: 2) {
+                Text("AI Chat")
+                    .font(.headline)
+                    .foregroundColor(.mamaCareTextPrimary)
+                
+                Text("Your pregnancy companion")
+                    .font(.caption)
+                    .foregroundColor(.mamaCareTextSecondary)
+            }
+            
+            Spacer()
+            
+            Button {
+                // Info action
+            } label: {
+                Image(systemName: "info.circle")
+                    .font(.title3)
+                    .foregroundColor(.mamaCareTextPrimary)
+            }
+        }
+        .padding()
+        .background(Color.white)
+        .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+    }
+    
+    private var messageList: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    if viewModel.chatMessages.isEmpty {
+                        welcomeView
+                    }
+                    
+                    ForEach(viewModel.chatMessages) { message in
+                        MessageBubble(message: message)
+                            .id(message.id)
+                    }
+                    
+                    if viewModel.isAILoading {
+                        loadingIndicator
+                    }
+                    
+                    if let error = viewModel.aiError {
+                        errorView(error)
+                    }
+                }
+                .padding()
+            }
+            .background(Color.mamaCareGrayLight)
+            .onChange(of: viewModel.chatMessages.count) { _ in
+                if let lastId = viewModel.chatMessages.last?.id {
+                    withAnimation {
+                        proxy.scrollTo(lastId, anchor: .bottom)
                     }
                 }
             }
-            .navigationBarHidden(true)
+        }
+    }
+    
+    private var welcomeView: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "bubble.left.and.bubble.right.fill")
+                .font(.system(size: 48))
+                .foregroundColor(.mamaCarePrimary.opacity(0.5))
+            
+            Text("Hi there! I'm here to listen and support you. How are you feeling today?")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+        }
+        .padding(.top, 60)
+    }
+    
+    private var loadingIndicator: some View {
+        HStack {
+            ProgressView()
+                .padding(10)
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(12)
+            Spacer()
+        }
+        .padding(.horizontal)
+    }
+    
+    private func errorView(_ error: String) -> some View {
+        Text(error)
+            .font(.caption)
+            .foregroundColor(.red)
+            .padding()
+    }
+    
+    private var inputArea: some View {
+        HStack(spacing: 12) {
+            TextField("Type your message...", text: $messageText)
+                .padding()
+                .background(Color.mamaCareGrayMedium)
+                .cornerRadius(24)
+                .focused($isInputFocused)
+            
+            Button {
+                sendMessage()
+            } label: {
+                Image(systemName: "arrow.up.circle.fill")
+                    .font(.system(size: 36))
+                    .foregroundColor(messageText.isEmpty ? .mamaCareTextTertiary : .mamaCarePrimary)
+            }
+            .disabled(messageText.isEmpty)
+        }
+        .padding()
+        .background(Color.white)
+    }
+    
+    @ViewBuilder
+    private var disclaimerOverlay: some View {
+        if !hasAcknowledgedDisclaimer {
+            DisclaimerOverlay {
+                hasAcknowledgedDisclaimer = true
+            }
         }
     }
     

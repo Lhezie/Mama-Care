@@ -2,206 +2,9 @@
 //  OnboardingFlowView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 06/11/2025.
+//  Created by Elizabeth Enechaziam on 06/11/2025.
 //
 
-
-//import SwiftUI
-//
-//struct OnboardingFlowView: View {
-//    @EnvironmentObject var viewModel: MamaCareViewModel
-//    @StateObject private var onboardingVM = OnboardingViewModel()
-//    @State private var currentStep = 0  // Controls the TabView page
-//
-//    var body: some View {
-//        NavigationView {
-//            ZStack {
-//                Color(.systemBackground).ignoresSafeArea()
-//
-//                TabView(selection: $currentStep) {
-//                    ConsentScreenView(currentStep: $currentStep)
-//                        .tag(0)
-//
-//                    UserTypeSelectionView(currentStep: $currentStep)
-//                        .tag(1)
-//
-//                    DateCaptureView(currentStep: $currentStep)
-//                        .tag(2)
-//
-//                    EmergencyContactsView(currentStep: $currentStep)
-//                        .tag(3)
-//                }
-//                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-//            }
-//            .navigationBarHidden(true)
-//        }
-//        .environmentObject(onboardingVM)
-//    }
-//}
-
-
-//import SwiftUI
-//
-//struct OnboardingFlowView: View {
-//    @EnvironmentObject var viewModel: MamaCareViewModel
-//    @StateObject private var onboardingVM = OnboardingViewModel()
-//    
-//    var body: some View {
-//        NavigationView {
-//            ZStack {
-//                Color(.systemBackground)
-//                    .ignoresSafeArea()
-//                
-//                TabView(selection: $viewModel.currentOnboardingStep) {
-//                    ConsentScreenView()
-//                        .tag(0)
-//                    
-//                    UserTypeSelectionView()
-//                        .tag(1)
-//                    
-//                    DateCaptureView()
-//                        .tag(2)
-//                    
-//                    EmergencyContactsView()
-//                        .tag(3)
-//                }
-//                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-//            }
-//            .navigationBarHidden(true)
-//        }
-//        .environmentObject(onboardingVM)
-//    }
-//}
-
-
-
-//import SwiftUI
-//
-//struct OnboardingFlowView: View {
-//    @EnvironmentObject var viewModel: MamaCareViewModel
-//    @StateObject private var onboardingVM = OnboardingViewModel()
-//
-//    @State private var step: OnboardingStep = .personalInfo
-//
-//    var body: some View {
-//        NavigationStack {
-//            ZStack {
-//                Color(.systemBackground).ignoresSafeArea()
-//
-//                Group {
-//                    switch step {
-//                    case .personalInfo:
-//                        CreateAccountStepOneView(
-//                            onNext: handlePersonalInfo
-//                        )
-//
-//                    case .accountInfo:
-//                        CreateAccountStepTwoView(
-//                            onNext: handleAccountInfo,
-//                            onBack: goBack
-//                        )
-//
-//                    case .consent:
-//                        ConsentScreenView(
-//                            onNext: handleConsent,
-//                            onBack: goBack
-//                        )
-//
-//                    case .userType:
-//                        UserTypeSelectionView(
-//                            onNext: handleUserType,
-//                            onBack: goBack
-//                        )
-//
-//                    case .dateCapture:
-//                        DateCaptureView(
-//                            onNext: handleDateCapture,
-//                            onBack: goBack
-//                        )
-//
-//                    case .emergencyContacts:
-//                        EmergencyContactsView(
-//                            onFinish: completeOnboarding,
-//                            onBack: goBack
-//                        )
-//                    }
-//                }
-//                .environmentObject(viewModel)
-//                .environmentObject(onboardingVM)
-//            }
-//        }
-//    }
-//
-//    // MARK: - Navigation Handlers
-//
-//    private func handlePersonalInfo() {
-//        if onboardingVM.isPersonalInfoValid {
-//            step = .accountInfo
-//        } else {
-//            onboardingVM.showPersonalInfoError = true
-//        }
-//    }
-//
-//    private func handleAccountInfo() {
-//        if onboardingVM.isAccountInfoValid {
-//            step = .consent
-//        } else {
-//            onboardingVM.showAccountInfoError = true
-//        }
-//    }
-//
-//    private func handleConsent() {
-//        if onboardingVM.canCompleteAccount {
-//            onboardingVM.user.privacyAcceptedAt = Date()
-//            step = .userType
-//        } else {
-//            onboardingVM.showConsentError = true
-//        }
-//    }
-//
-//    private func handleUserType() {
-//        if onboardingVM.user.userType != nil {
-//            step = .dateCapture
-//        }
-//    }
-//
-//    private func handleDateCapture() {
-//        if onboardingVM.isDateValid {
-//            step = .emergencyContacts
-//        } else {
-//            onboardingVM.showDateError = true
-//        }
-//    }
-//
-//    private func completeOnboarding() {
-//        viewModel.completeOnboarding(
-//            with: onboardingVM.user,
-//            storage: onboardingVM.storageOption,
-//            wantsReminders: onboardingVM.wantsReminders
-//        )
-//    }
-//
-//    private func goBack() {
-//        switch step {
-//        case .accountInfo:
-//            step = .personalInfo
-//        case .consent:
-//            step = .accountInfo
-//        case .userType:
-//            step = .consent
-//        case .dateCapture:
-//            step = .userType
-//        case .emergencyContacts:
-//            step = .dateCapture
-//        default:
-//            break
-//        }
-//    }
-//}
-//
-//enum OnboardingStep {
-//    case personalInfo, accountInfo, consent, userType, dateCapture, emergencyContacts
-//}
 
 
 
@@ -213,86 +16,124 @@ struct OnboardingFlowView: View {
     @StateObject private var onboardingVM = OnboardingViewModel()
 
     @State private var step: OnboardingStep = .personalInfo
+    @State private var onboardingError: String?
+    @State private var showOnboardingError = false
+    @State private var isEmailTakenError = false
+    @State private var isRegistering = false
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color(.systemBackground).ignoresSafeArea()
+        ZStack {
+            Color(.systemBackground).ignoresSafeArea()
 
-                Group {
-                    switch step {
-                    case .personalInfo:
-                        CreateAccountStepOneView(
-                            onboardingVM: onboardingVM,
-                            onNext: handlePersonalInfo
-                        )
-                    case .accountInfo:
-                        CreateAccountStepTwoView(
-                            onboardingVM: onboardingVM,
-                            onBack: goBack,
-                            onCreateAccount: handleAccountInfo
-                        )
-                    case .consent:
-                        ConsentScreenView(
-                            onboardingVM: onboardingVM,
-                            onNext: handleConsent,
-                            onBack: goBack
-                        )
-                    case .userType:
-                        UserTypeSelectionView(
-                            onboardingVM: onboardingVM,
-                            onNext: handleUserType,
-                            onBack: goBack
-                        )
-                    case .dateCapture:
-                        DateCaptureView(
-                            onboardingVM: onboardingVM,
-                            onNext: handleDateCapture,
-                            onBack: goBack
-                        )
-                    case .emergencyContacts:
-                        EmergencyContactsView(
-                            onFinish: completeOnboarding,
-                            onBack: goBack
-                        )
+            Group {
+                switch step {
+                case .personalInfo:
+                    CreateAccountStepOneView(
+                        onboardingVM: onboardingVM,
+                        onNext: handlePersonalInfo
+                    )
+                case .accountInfo:
+                    CreateAccountStepTwoView(
+                        onboardingVM: onboardingVM,
+                        onBack: goBack,
+                        onCreateAccount: handleAccountInfo
+                    )
+                case .consent:
+                    ConsentScreenView(
+                        onboardingVM: onboardingVM,
+                        onNext: handleConsent,
+                        onBack: goBack
+                    )
+                case .userType:
+                    UserTypeSelectionView(
+                        onboardingVM: onboardingVM,
+                        onNext: handleUserType,
+                        onBack: goBack
+                    )
+                case .dateCapture:
+                    DateCaptureView(
+                        onboardingVM: onboardingVM,
+                        onNext: handleDateCapture,
+                        onBack: goBack
+                    )
+                case .emergencyContacts:
+                    EmergencyContactsView(
+                        onFinish: completeOnboarding,
+                        onBack: goBack
+                    )
 
-                    }
                 }
-                .environmentObject(viewModel)
-                .environmentObject(onboardingVM)
             }
+            .environmentObject(viewModel)
+            .environmentObject(onboardingVM)
+            
+            if isRegistering {
+                ZStack {
+                    Color.black.opacity(0.3).ignoresSafeArea()
+                    ProgressView("Creating account...")
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(10)
+                }
+            }
+        }
+        .alert("Account Creation Failed", isPresented: $showOnboardingError) {
+            if isEmailTakenError {
+                Button("Sign In Instead") {
+                    // Logic to jump to Sign In
+                    viewModel.hasCompletedOnboarding = true 
+                    // This is a bit hacky, but setting this will likely take the user out of onboarding
+                    // and since they aren't logged in, they'll see the Sign In screen if the app root handles it.
+                }
+                Button("Use Different Email", role: .cancel) { }
+            } else {
+                Button("OK", role: .cancel) { }
+            }
+        } message: {
+            Text(onboardingError ?? "An unknown error occurred. Please try again.")
         }
     }
 
-    // MARK: - Navigation Handlers
+    //  Navigation Handlers
+
+    //  Navigation Handlers
 
     private func handlePersonalInfo() {
         if onboardingVM.isPersonalInfoValid {
-            step = .accountInfo
+            // New Flow: Personal Info -> Consent
+            step = .consent
         } else {
             onboardingVM.showPersonalInfoError = true
+        }
+    }
+    
+    // New handler for Consent Step
+    private func handleConsent() {
+        print("OnboardingFlowView - handleConsent called")
+        
+        if onboardingVM.canCompleteAccount {
+            print("Validation passed. Storage Mode: \(String(describing: onboardingVM.storageOption))")
+            onboardingVM.user.privacyAcceptedAt = Date()
+            
+            // Branching Logic
+            if onboardingVM.storageOption == .deviceOnly {
+                // Skip Account Info (Email/Pass)
+                step = .userType
+            } else {
+                // Cloud users need Account Info
+                step = .accountInfo
+            }
+        } else {
+             onboardingVM.showConsentError = true
         }
     }
 
     private func handleAccountInfo() {
         if onboardingVM.isAccountInfoValid {
-            step = .consent
+             // Cloud Flow: After account info, go to UserType (Consent already done)
+             step = .userType
         } else {
             onboardingVM.showAccountInfoError = true
-        }
-    }
-
-    private func handleConsent() {
-        print("🔍 OnboardingFlowView - handleConsent called")
-        print("   - canCompleteAccount: \(onboardingVM.canCompleteAccount)")
-        
-        if onboardingVM.canCompleteAccount {
-            print("✅ handleConsent - validation passed, setting privacyAcceptedAt and navigating to userType")
-            onboardingVM.user.privacyAcceptedAt = Date()
-            step = .userType
-        } else {
-            print("❌ handleConsent - validation failed, showing consent error")
-            onboardingVM.showConsentError = true
         }
     }
 
@@ -311,25 +152,57 @@ struct OnboardingFlowView: View {
     }
 
     private func completeOnboarding() {
+        isRegistering = true
+        onboardingError = nil
+        isEmailTakenError = false
+        
         viewModel.completeOnboarding(
             with: onboardingVM.user,
+            password: onboardingVM.password,
             storage: onboardingVM.storageOption,
             wantsReminders: onboardingVM.wantsReminders
-        )
+        ) { result in
+            isRegistering = false
+            switch result {
+            case .success:
+                print("Onboarding flow completed successfully")
+            case .failure(let error):
+                let nsError = error as NSError
+                // Firebase error code for email already in use
+                if nsError.domain == "com.google.firebase.auth" && nsError.code == 17007 {
+                    isEmailTakenError = true
+                    onboardingError = "This email is already associated with an account. Would you like to sign in instead?"
+                } else {
+                    onboardingError = error.localizedDescription
+                }
+                showOnboardingError = true
+            }
+        }
     }
 
     private func goBack() {
         switch step {
-        case .accountInfo:
-            step = .personalInfo
         case .consent:
-            step = .accountInfo
-        case .userType:
+            step = .personalInfo
+            
+        case .accountInfo:
+            // Only Cloud users see this, so back takes them to Consent
             step = .consent
+            
+        case .userType:
+            // Logic depends on storage mode
+            if onboardingVM.storageOption == .deviceOnly {
+                step = .consent
+            } else {
+                step = .accountInfo
+            }
+            
         case .dateCapture:
             step = .userType
+            
         case .emergencyContacts:
             step = .dateCapture
+            
         default:
             break
         }
@@ -344,155 +217,3 @@ enum OnboardingStep {
 
 
 
-//import SwiftUI
-//
-//struct OnboardingFlowView: View {
-//    @EnvironmentObject var viewModel: MamaCareViewModel
-//    @StateObject private var onboardingVM = OnboardingViewModel()
-//
-//    var body: some View {
-//        NavigationStack {
-//            ZStack {
-//                Color(.systemBackground).ignoresSafeArea()
-//
-//                Group {
-//                    switch onboardingVM.currentStep {
-//                    case .personalInfo:
-//                        CreateAccountStepOneView(
-//                            onboardingVM: onboardingVM,
-//                            onNext: handlePersonalInfo
-//                        )
-//                    case .accountInfo:
-//                        CreateAccountStepTwoView(
-//                            onboardingVM: onboardingVM,
-//                            onBack: onboardingVM.goBack,
-//                            onCreateAccount: handleAccountInfo
-//                        )
-//                    case .consent:
-//                        ConsentScreenView(
-//                            onboardingVM: onboardingVM,
-//                            onNext: handleConsent,
-//                            onBack: onboardingVM.goBack
-//                        )
-//                    case .userType:
-//                        UserTypeSelectionView(
-//                            onboardingVM: onboardingVM,
-//                            onNext: handleUserType,
-//                            onBack: onboardingVM.goBack
-//                        )
-//                    case .dateCapture:
-//                        DateCaptureView(
-//                            onboardingVM: onboardingVM,
-//                            onNext: handleDateCapture,
-//                            onBack: onboardingVM.goBack
-//                        )
-//                    case .emergencyContacts:
-//                        EmergencyContactsView(
-//                            onboardingVM: onboardingVM,
-//                            onFinish: completeOnboarding,
-//                            onBack: onboardingVM.goBack
-//                        )
-//                    }
-//                }
-//                .environmentObject(viewModel)
-//                .environmentObject(onboardingVM)
-//            }
-//        }
-//    }
-//
-//    // MARK: - Navigation Handlers
-//
-//    private func handlePersonalInfo() {
-//        if onboardingVM.isPersonalInfoValid {
-//            onboardingVM.goToNextStep()
-//        } else {
-//            onboardingVM.showPersonalInfoError = true
-//        }
-//    }
-//
-//    private func handleAccountInfo() {
-//        if onboardingVM.isAccountInfoValid {
-//            onboardingVM.goToNextStep()
-//        } else {
-//            onboardingVM.showAccountInfoError = true
-//        }
-//    }
-//
-//    private func handleConsent() {
-//        if onboardingVM.canCompleteAccount {
-//            onboardingVM.user.privacyAcceptedAt = Date()
-//            onboardingVM.goToNextStep()
-//        } else {
-//            onboardingVM.showConsentError = true
-//        }
-//    }
-//
-//    private func handleUserType() {
-//        if onboardingVM.user.userType != nil {
-//            onboardingVM.goToNextStep()
-//        }
-//    }
-//
-//    private func handleDateCapture() {
-//        if onboardingVM.isDateValid {
-//            onboardingVM.goToNextStep()
-//        } else {
-//            onboardingVM.showDateError = true
-//        }
-//    }
-//
-//    private func completeOnboarding() {
-//        viewModel.completeOnboarding(
-//            with: onboardingVM.user,
-//            storage: onboardingVM.storageOption,
-//            wantsReminders: onboardingVM.wantsReminders
-//        )
-//    }
-//}
-//
-//enum OnboardingStep: CaseIterable {
-//    case personalInfo, accountInfo, consent, userType, dateCapture, emergencyContacts
-//}
-//
-//class OnboardingViewModel: ObservableObject {
-//    @Published var user = MamaUser()
-//    @Published var currentStep: OnboardingStep = .personalInfo
-//
-//    @Published var showPersonalInfoError = false
-//    @Published var showAccountInfoError = false
-//    @Published var showConsentError = false
-//    @Published var showDateError = false
-//
-//    @Published var storageOption: StorageOption = .iCloud
-//    @Published var wantsReminders: Bool = true
-//
-//    var isPersonalInfoValid: Bool {
-//        !user.name.isEmpty && !user.email.isEmpty
-//    }
-//
-//    var isAccountInfoValid: Bool {
-//        !user.password.isEmpty && user.password.count >= 6
-//    }
-//
-//    var canCompleteAccount: Bool {
-//        user.privacyAcceptedAt != nil
-//    }
-//
-//    var isDateValid: Bool {
-//        user.dueDate != nil
-//    }
-//
-//    func goToNextStep() {
-//        if let index = OnboardingStep.allCases.firstIndex(of: currentStep),
-//           index + 1 < OnboardingStep.allCases.count {
-//            currentStep = OnboardingStep.allCases[index + 1]
-//        }
-//    }
-//
-//    func goBack() {
-//        if let index = OnboardingStep.allCases.firstIndex(of: currentStep), index > 0 {
-//            currentStep = OnboardingStep.allCases[index - 1]
-//        }
-//    }
-//}
-//

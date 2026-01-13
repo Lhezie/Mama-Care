@@ -106,7 +106,7 @@ def main():
         if replacements > 0:
             files_modified += 1
             total_replacements += replacements
-            print(f"✅ Modified {filepath.name}: {replacements} replacements")
+            print(f" Modified {filepath.name}: {replacements} replacements")
         else:
             print(f"⏭️  No changes needed")
     

@@ -2,7 +2,7 @@
 //  SwiftDataService.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 24/11/2025.
+//  Created by Elizabeth Enechaziam on 24/11/2025.
 //
 
 import Foundation
@@ -12,51 +12,56 @@ import SwiftData
 class SwiftDataService {
     static let shared = SwiftDataService()
     
-    private var modelContainer: ModelContainer?
     private var modelContext: ModelContext?
     
     private init() {
-        setupContainer()
+        // Empty init - context will be injected later
     }
     
-    // MARK: - Setup
+    //  Setup
     
-    private func setupContainer() {
-        do {
-            let schema = Schema([
-                UserProfile.self,
-                MoodEntry.self,
-                Contact.self
-            ])
-            
-            let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-            modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
-            modelContext = ModelContext(modelContainer!)
-            
-            print("✅ SwiftData container initialized")
-        } catch {
-            print("❌ Failed to initialize SwiftData: \(error)")
-        }
+    /// Inject the ModelContext from the app's container
+    func setModelContext(_ context: ModelContext) {
+        self.modelContext = context
+        print(" SwiftDataService: ModelContext initialized")
     }
     
     func getContext() -> ModelContext? {
         return modelContext
     }
     
-    // MARK: - UserProfile Operations
+    //  UserProfile Operations
     
     func saveUserProfile(_ profile: UserProfile) throws {
         guard let context = modelContext else {
-            throw NSError(domain: "SwiftDataService", code: 500, userInfo: [NSLocalizedDescriptionKey: "ModelContext not initialized"])
+            throw NSError(domain: "SwiftDataService", code: 500, userInfo: 
+            [NSLocalizedDescriptionKey: "ModelContext not initialized"])
+        }
+        
+        // Check if profile already exists to prevent duplicate inserts
+        do {
+            let existingDescriptor = FetchDescriptor<UserProfile>()
+            let allExisting = try context.fetch(existingDescriptor)
+            
+            if allExisting.contains(where: { $0.id == profile.id }) {
+                return 
+            }
+        } catch {
+            print("Error checking for existing profile: \(error)")
         }
         
         context.insert(profile)
         try context.save()
-        print("✅ UserProfile saved to SwiftData")
+        print(" UserProfile saved to SwiftData")
     }
     
-    func fetchUserProfile() -> UserProfile? {
-        guard let context = modelContext else { return nil }
+    func fetchUserProfile(for uid: String? = nil) -> UserProfile? {
+        guard let context = modelContext else {
+            print("SwiftDataService: fetchUserProfile failed - Context is nil")
+            return nil 
+        }
+        
+        print("SwiftDataService: Fetching profile for uid: \(uid ?? "nil")")
         
         let descriptor = FetchDescriptor<UserProfile>(
             sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
@@ -64,9 +69,29 @@ class SwiftDataService {
         
         do {
             let profiles = try context.fetch(descriptor)
-            return profiles.first
+            print("SwiftDataService: Found \(profiles.count) total profiles")
+            
+            for p in profiles {
+                print("   - Profile: ID=\(p.id), UID=\(p.uid ?? "nil"), Created=\(p.createdAt)")
+            }
+            
+            // Filter by UID if provided
+            if let uid = uid {
+                if let match = profiles.first(where: { $0.uid == uid }) {
+                    return match
+                }
+                return nil
+            } else {
+                // Return device-only profile or most recent
+                if let deviceOnly = profiles.first(where: { $0.uid == nil }) {
+                    print(" SwiftDataService: Found device-only profile")
+                    return deviceOnly
+                }
+                print(" SwiftDataService: Returning first available profile (fallback)")
+                return profiles.first
+            }
         } catch {
-            print("❌ Failed to fetch UserProfile: \(error)")
+            print("Failed to fetch UserProfile: \(error)")
             return nil
         }
     }
@@ -77,7 +102,7 @@ class SwiftDataService {
         }
         
         try context.save()
-        print("✅ UserProfile updated")
+        print("UserProfile updated")
     }
     
     func deleteUserProfile(_ profile: UserProfile) throws {
@@ -87,10 +112,10 @@ class SwiftDataService {
         
         context.delete(profile)
         try context.save()
-        print("✅ UserProfile deleted")
+        print("UserProfile deleted")
     }
     
-    // MARK: - MoodEntry Operations
+    //  MoodEntry Operations
     
     func saveMoodEntry(_ entry: MoodEntry) throws {
         guard let context = modelContext else {
@@ -99,7 +124,7 @@ class SwiftDataService {
         
         context.insert(entry)
         try context.save()
-        print("✅ MoodEntry saved to SwiftData")
+        print("MoodEntry saved to SwiftData")
     }
     
     func fetchMoodEntries(for user: UserProfile) -> [MoodEntry] {
@@ -116,7 +141,7 @@ class SwiftDataService {
             // Filter by user ID manually
             return allEntries.filter { $0.user?.id == user.id }
         } catch {
-            print("❌ Failed to fetch MoodEntries: \(error)")
+            print("Failed to fetch MoodEntries: \(error)")
             return []
         }
     }
@@ -131,7 +156,7 @@ class SwiftDataService {
         do {
             return try context.fetch(descriptor)
         } catch {
-            print("❌ Failed to fetch all MoodEntries: \(error)")
+            print("Failed to fetch all MoodEntries: \(error)")
             return []
         }
     }
@@ -143,10 +168,10 @@ class SwiftDataService {
         
         context.delete(entry)
         try context.save()
-        print("✅ MoodEntry deleted")
+        print("MoodEntry deleted")
     }
     
-    // MARK: - Contact Operations
+    //  Contact Operations
     
     func saveContact(_ contact: Contact) throws {
         guard let context = modelContext else {
@@ -155,7 +180,7 @@ class SwiftDataService {
         
         context.insert(contact)
         try context.save()
-        print("✅ Contact saved to SwiftData")
+        print("Contact saved to SwiftData")
     }
     
     func fetchContacts(for user: UserProfile) -> [Contact] {
@@ -170,7 +195,7 @@ class SwiftDataService {
             // Filter by user ID manually
             return allContacts.filter { $0.user?.id == user.id }
         } catch {
-            print("❌ Failed to fetch Contacts: \(error)")
+            print("Failed to fetch Contacts: \(error)")
             return []
         }
     }
@@ -182,10 +207,64 @@ class SwiftDataService {
         
         context.delete(contact)
         try context.save()
-        print("✅ Contact deleted")
+        print("Contact deleted")
     }
     
-    // MARK: - Batch Operations
+    //  Vaccine Record Operations
+    
+    func saveVaccineRecord(_ record: VaccineRecord) throws {
+        guard let context = modelContext else {
+            throw NSError(domain: "SwiftDataService", code: 500, userInfo: [NSLocalizedDescriptionKey: "ModelContext not initialized"])
+        }
+        
+        context.insert(record)
+        try context.save()
+        print("VaccineRecord saved to SwiftData")
+    }
+    
+    func fetchVaccineRecords(for user: UserProfile) -> [VaccineRecord] {
+        guard let context = modelContext else { return [] }
+        
+        let descriptor = FetchDescriptor<VaccineRecord>()
+        
+        do {
+            let allRecords = try context.fetch(descriptor)
+            return allRecords.filter { $0.user?.id == user.id }
+        } catch {
+            print("Failed to fetch VaccineRecords: \(error)")
+            return []
+        }
+    }
+    
+    //  ChatEntry Operations
+    
+    func saveChatEntry(_ entry: ChatEntry) throws {
+        guard let context = modelContext else {
+            throw NSError(domain: "SwiftDataService", code: 500, userInfo: [NSLocalizedDescriptionKey: "ModelContext not initialized"])
+        }
+        
+        context.insert(entry)
+        try context.save()
+        print(" ChatEntry saved to SwiftData")
+    }
+    
+    func fetchChatEntries(for user: UserProfile) -> [ChatEntry] {
+        guard let context = modelContext else { return [] }
+        
+        let descriptor = FetchDescriptor<ChatEntry>(
+            sortBy: [SortDescriptor(\.date, order: .forward)]
+        )
+        
+        do {
+            let allEntries = try context.fetch(descriptor)
+            return allEntries.filter { $0.user?.id == user.id }
+        } catch {
+            print("Failed to fetch ChatEntries: \(error)")
+            return []
+        }
+    }
+
+    //  Batch Operations
     
     func deleteAllData() throws {
         guard let context = modelContext else {
@@ -200,6 +279,7 @@ class SwiftDataService {
         }
         
         try context.save()
-        print("✅ All SwiftData deleted")
+        print("All SwiftData deleted")
     }
 }
+

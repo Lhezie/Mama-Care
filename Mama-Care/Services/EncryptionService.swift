@@ -2,7 +2,7 @@
 //  EncryptionService.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 24/11/2025.
+//  Created by Elizabeth Enechaziam on 24/11/2025.
 //
 
 import Foundation
@@ -15,7 +15,7 @@ class EncryptionService {
     
     private init() {}
     
-    // MARK: - Key Management
+    //  Key Management
     
     private func getSymmetricKey() -> SymmetricKey {
         // Check if key exists in Keychain
@@ -44,7 +44,7 @@ class EncryptionService {
         // Add new key
         let status = SecItemAdd(query as CFDictionary, nil)
         if status != errSecSuccess {
-            print("❌ Failed to save encryption key to Keychain: \(status)")
+            print("Failed to save encryption key to Keychain: \(status)")
         }
     }
     
@@ -65,7 +65,7 @@ class EncryptionService {
         return nil
     }
     
-    // MARK: - Encryption / Decryption
+    // Encryption / Decryption
     
     func encrypt(data: Data) -> Data? {
         do {
@@ -73,7 +73,7 @@ class EncryptionService {
             let sealedBox = try ChaChaPoly.seal(data, using: key)
             return sealedBox.combined
         } catch {
-            print("❌ Encryption failed: \(error)")
+            print("Encryption failed: \(error)")
             return nil
         }
     }
@@ -85,12 +85,12 @@ class EncryptionService {
             let decryptedData = try ChaChaPoly.open(sealedBox, using: key)
             return decryptedData
         } catch {
-            print("❌ Decryption failed: \(error)")
+            print("Decryption failed: \(error)")
             return nil
         }
     }
     
-    // MARK: - String Encryption (for SwiftData fields)
+    // String Encryption (for SwiftData fields)
     
     func encryptString(_ string: String) -> Data? {
         guard let data = string.data(using: .utf8) else { return nil }

@@ -1,0 +1,45 @@
+{
+  "identifier" : "B8E7A9C4",
+  "nonRenewingSubscriptions" : [],
+  "products" : [],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_GB",
+    "_storefront" : "GBR",
+    "_storeKitErrors" : []
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21441286",
+      "localizations" : [],
+      "name" : "Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "4.00",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6670832443",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlock emergency escalation, advanced analytics, and priority support",
+              "displayName" : "MamaCare Premium",
+              "locale" : "en_GB"
+            }
+          ],
+          "productID" : "com.mamacare.premium.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Premium Monthly",
+          "subscriptionGroupID" : "21441286",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

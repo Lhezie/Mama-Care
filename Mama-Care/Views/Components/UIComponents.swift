@@ -2,12 +2,12 @@
 //  UIComponents.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 03/11/2025.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
 
 import SwiftUI
 
-// MARK: - UI Components
+//  UI Components
 
 struct QuickActionButton: View {
     let title: String
@@ -230,11 +230,11 @@ struct StorageCard: View {
 }
 
 
-// MARK: - Custom Checkbox Toggle Style
+//  Custom Checkbox Toggle Style
 public struct MamaCheckboxToggleStyle: ToggleStyle {
     public init() {}
     
-    public func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: ToggleStyle.Configuration) -> some View {
         Button(action: {
             configuration.isOn.toggle()
         }) {

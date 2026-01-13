@@ -2,7 +2,7 @@
 //  MainTabView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 03/11/2025.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
 
 import SwiftUI
@@ -10,6 +10,9 @@ import SwiftUI
 struct MainTabView: View {
     @EnvironmentObject var viewModel: MamaCareViewModel
     @State private var selectedTab: Int = 0 // Added for TabView selection
+    @State private var lastSelectedTab: Int = 0
+    @State private var showPremiumAlert = false
+    @State private var showSubscriptionSheet = false
 
     var body: some View {
         TabView(selection: $selectedTab) { // Added selection binding
@@ -19,7 +22,7 @@ struct MainTabView: View {
                 }
                 .tag(0) // Added tag
             
-            MoodCheckInView()
+            MoodCheckInView(selectedTab: $selectedTab)
                 .tabItem {
                     Label("Mood", systemImage: "heart.fill") // Changed to Label
                 }
@@ -55,7 +58,7 @@ struct MainTabView: View {
                 }
                 .tag(4)
             
-            AIChatView()
+            AIChatView(isPresented: .constant(true))
                 .tabItem {
                     Image(systemName: "message.fill")
                     Text("AI Chat")
@@ -70,10 +73,47 @@ struct MainTabView: View {
                 .tag(6)
         }
         .accentColor(.purple)
+        .onReceive(NotificationCenter.default.publisher(for: .navigateToMood)) { _ in
+            selectedTab = 1
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .navigateToVaccines)) { _ in
+            selectedTab = 3
+        }
+        .fullScreenCover(isPresented: $viewModel.showEmergencyEscalation) {
+            EmergencyView()
+        }
+        .onChange(of: selectedTab) { newTab in
+            if newTab == 4 { // Emergency Tab
+                if !viewModel.isPremium {
+                    // Revert to last tab
+                    // We need a slight delay or just immediate set back? Immediate usually works or dispatch async.
+                    // But we don't have 'oldValue' easily in SwiftUI < 17 without tracking.
+                    // Simplest tracking:
+                    selectedTab = lastSelectedTab
+                    showPremiumAlert = true
+                } else {
+                    lastSelectedTab = newTab
+                }
+            } else {
+                lastSelectedTab = newTab
+            }
+        }
+        .sheet(isPresented: $showSubscriptionSheet) {
+            PaywallView()
+                .environmentObject(viewModel)
+        }
+        .alert("Premium Feature", isPresented: $showPremiumAlert) {
+            Button("Subscribe", role: .none) {
+                showSubscriptionSheet = true
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("The Emergency Escalation feature requires a premium subscription. Please subscribe to access this safety tool.")
+        }
     }
 }
 
-// MARK: - Preview
+//  Preview
 #Preview("Pregnant User") {
     MainTabView()
         .environmentObject({

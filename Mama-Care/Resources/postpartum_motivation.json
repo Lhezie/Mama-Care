@@ -1,24 +1,16 @@
 [
   {
     "postpartumDays": [
-      {
-        "dayNumber": 0,
-        "title": "Day 0 - Your baby is here!",
-        "messages": [
-          "Welcome to motherhood! Rest and recovery are your top priorities today.",
-          "Stay hydrated and accept all offers of help - you've just accomplished something amazing.",
-          "Skin-to-skin contact with your baby releases oxytocin, helping with bonding and recovery."
-        ]
+        {
+          "dayNumber": 1,
+          "title": "Day 1 - Your baby is here! 👶💛",
+          "messages": [
+            "Welcome to motherhood. Rest now. Recovery is your only priority today.",
+               "Drink water. Accept help. You did something extraordinary.",
+               "Do skin to skin contact. It boosts bonding and supports healing."
+          ]
       },
-      {
-        "dayNumber": 1,
-        "title": "Day 1 postpartum",
-        "messages": [
-          "Focus on resting today. Let others handle meals and chores.",
-          "Try to eat small, nutritious snacks throughout the day rather than large meals.",
-          "Your body is working hard to recover - be patient and kind with yourself."
-        ]
-      },
+    
       {
         "dayNumber": 2,
         "title": "Day 2 postpartum",

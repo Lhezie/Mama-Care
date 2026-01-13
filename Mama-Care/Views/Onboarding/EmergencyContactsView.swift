@@ -2,7 +2,7 @@
 //  EmergencyContactsView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 15/11/2025.
+//  Created by Elizabeth Enechaziam on 15/11/2025.
 //
 
 import SwiftUI
@@ -18,56 +18,31 @@ struct EmergencyContactsView: View {
         VStack(spacing: 0) {
 
 
-            // MARK: - Emergency Contacts Section
+            //  Emergency Contacts Section
             EmergencyContactsSection(showHeader: true)
                 .padding(.bottom, 20)
 
             Spacer()
 
-            // MARK: - Navigation
-            HStack(spacing: 16) {
-                Button("Skip for Now") {
-                    completeOnboarding()
+            //  Navigation
+            Button {
+                onboardingVM.user.emergencyContacts = viewModel.emergencyContacts
+                onFinish()
+            } label: {
+                HStack {
+                    Text("Navigate to Dashboard")
+                    Image(systemName: "arrow.right")
                 }
                 .font(.headline)
-                .foregroundColor(.mamaCareTextPrimary)
+                .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.white)
+                .background(Color.mamaCarePrimary)
                 .cornerRadius(12)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.mamaCareGrayBorder, lineWidth: 1)
-                )
-
-                Button {
-                    completeOnboarding()
-                } label: {
-                    HStack {
-                        Text("Skip to Dashboard")
-                        Image(systemName: "arrow.right")
-                    }
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.mamaCarePrimary)
-                    .cornerRadius(12)
-                }
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 40)
         }
         .background(Color(hex: "F0FDFA").ignoresSafeArea()) // Light mint background
-    }
-    
-    private func completeOnboarding() {
-        onboardingVM.user.emergencyContacts = viewModel.emergencyContacts
-        viewModel.completeOnboarding(
-            with: onboardingVM.user,
-            storage: onboardingVM.storageOption,
-            wantsReminders: onboardingVM.wantsReminders
-        )
-        onFinish()
     }
 }

@@ -12,6 +12,8 @@
 		0D552D442ED3F1EE002CC6B1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0D552D432ED3F1EE002CC6B1 /* FirebaseAuth */; };
 		0D552D462ED3F1EE002CC6B1 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0D552D452ED3F1EE002CC6B1 /* FirebaseCrashlytics */; };
 		0D552D482ED3F1EE002CC6B1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0D552D472ED3F1EE002CC6B1 /* FirebaseFirestore */; };
+		0D6F09582ED634780079E5EC /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = 0D6F09572ED634780079E5EC /* FirebaseAILogic */; };
+		0D6F762D2ED6258A0077C01B /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 0D6F762C2ED6258A0077C01B /* GoogleGenerativeAI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D6F09582ED634780079E5EC /* FirebaseAILogic in Frameworks */,
+				0D6F762D2ED6258A0077C01B /* GoogleGenerativeAI in Frameworks */,
 				0D552D462ED3F1EE002CC6B1 /* FirebaseCrashlytics in Frameworks */,
 				0D552D482ED3F1EE002CC6B1 /* FirebaseFirestore in Frameworks */,
 				0D552D422ED3F1EE002CC6B1 /* FirebaseAnalytics in Frameworks */,
@@ -143,6 +147,8 @@
 				0D552D432ED3F1EE002CC6B1 /* FirebaseAuth */,
 				0D552D452ED3F1EE002CC6B1 /* FirebaseCrashlytics */,
 				0D552D472ED3F1EE002CC6B1 /* FirebaseFirestore */,
+				0D6F762C2ED6258A0077C01B /* GoogleGenerativeAI */,
+				0D6F09572ED634780079E5EC /* FirebaseAILogic */,
 			);
 			productName = "Mama-Care";
 			productReference = 0D61BF462EB96C4700420160 /* Mama-Care.app */;
@@ -228,6 +234,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				0D552D402ED3F1EE002CC6B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				0D6F762B2ED6258A0077C01B /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0D61BF472EB96C4700420160 /* Products */;
@@ -607,6 +614,14 @@
 				minimumVersion = 12.6.0;
 			};
 		};
+		0D6F762B2ED6258A0077C01B /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -629,6 +644,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0D552D402ED3F1EE002CC6B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		0D6F09572ED634780079E5EC /* FirebaseAILogic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0D552D402ED3F1EE002CC6B1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAILogic;
+		};
+		0D6F762C2ED6258A0077C01B /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0D6F762B2ED6258A0077C01B /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

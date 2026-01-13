@@ -2,13 +2,14 @@
 //  MoodCheckInView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 03/11/2025.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
 
 import SwiftUI
 
 struct MoodCheckInView: View {
     @EnvironmentObject var viewModel: MamaCareViewModel
+    @Binding var selectedTab: Int
     @State private var selectedMood: MoodType?
     @State private var notes = ""
     
@@ -16,6 +17,10 @@ struct MoodCheckInView: View {
     @State private var showSupportiveTips = false
     @State private var showPositiveSupport = false
     @State private var showGoodMoodSuccess = false
+    @State private var showAIChat = false
+    @State private var showCalmingAudio = false
+    // Emergency Escalation
+    @State private var showContactSelection = false
     
     var body: some View {
         NavigationView {
@@ -126,36 +131,84 @@ struct MoodCheckInView: View {
             .sheet(isPresented: $showSupportiveTips) {
                 SupportiveTipsView(
                     onEmergencyContact: {
-                        // Handle emergency contact
-                        print("Emergency Contact Tapped")
+                        print("Alert Emergency Contact tapped")
+                        showSupportiveTips = false
+                        // Small delay to allow sheet to dismiss
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            print("Setting showContactSelection = true")
+                            print("Current contact count: \(viewModel.emergencyContacts.count)")
+                            showContactSelection = true
+                        }
                     },
                     onTalkToAI: {
-                        // Handle AI Chat
-                        print("Talk to AI Tapped")
+                        showSupportiveTips = false
+                        // Small delay to allow sheet to dismiss
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            showAIChat = true
+                        }
                     },
                     onCalmingAudio: {
-                        // Handle Audio
-                        print("Calming Audio Tapped")
+                        showSupportiveTips = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            showCalmingAudio = true
+                        }
+                    },
+                    onDismiss: {
+                        // Navigate back to dashboard
+                        selectedTab = 0
                     }
                 )
             }
             .sheet(isPresented: $showPositiveSupport) {
                 PositiveSupportView(
                     onTalkToAI: {
-                        // Handle AI Chat
-                        print("Talk to AI Tapped")
+                        showPositiveSupport = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            showAIChat = true
+                        }
                     },
                     onDone: {
                         showPositiveSupport = false
+                        // Navigate back to dashboard
+                        selectedTab = 0
                     }
                 )
             }
-            .alert("Wonderful!", isPresented: $showGoodMoodSuccess) {
-                Button("Done", role: .cancel) { }
+            .alert("Mood Logged!", isPresented: $showGoodMoodSuccess) {
+                Button("OK") {
+                    // Navigate back to dashboard
+                    selectedTab = 0
+                }
             } message: {
                 Text("Your strength and positivity shine through! Keep nurturing yourself and your little one.")
             }
+            .sheet(isPresented: $showAIChat) {
+                AIChatView(isPresented: $showAIChat)
+            }
+            .sheet(isPresented: $showCalmingAudio) {
+                CalmingAudioView()
+                    .environmentObject(viewModel)
+            }
+            .sheet(isPresented: $showContactSelection) {
+                EmergencyContactSelectionView()
+                    .environmentObject(viewModel)
+                    .onDisappear {
+                        // Navigate to dashboard when dismissed
+                        selectedTab = 0
+                }
+            }
+            .alert(item: Binding<AlertItem?>(
+                get: { viewModel.moodViewModel.saveError.map { AlertItem(message: $0) } },
+                set: { _ in viewModel.moodViewModel.saveError = nil }
+            )) { item in
+                Alert(title: Text("Failed to Save"), message: Text(item.message), dismissButton: .default(Text("OK")))
+            }
         }
+    }
+    
+    struct AlertItem: Identifiable {
+        var id = UUID()
+        var message: String
     }
     
     private func submitCheckIn() {
@@ -164,6 +217,10 @@ struct MoodCheckInView: View {
         // Save to ViewModel
         let checkIn = MoodCheckIn(moodType: mood, notes: notes.isEmpty ? nil : notes)
         viewModel.addMoodCheckIn(checkIn)
+        
+        // Reset form
+        selectedMood = nil
+        notes = ""
         
         // Trigger Navigation
         switch mood {
@@ -174,10 +231,29 @@ struct MoodCheckInView: View {
         case .notGood:
             showSupportiveTips = true
         }
+    }
+    
+    //  Helper Methods
+    
+    private func callContact(_ contact: EmergencyContact) {
+        let cleanNumber = contact.phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        if let url = URL(string: "tel://\(cleanNumber)"), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    private func messageContact(_ contact: EmergencyContact) {
+        let cleanNumber = contact.phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        // Create a pre-filled message
+        let message = "Hi \(contact.name), I'm not feeling great right now and wanted to reach out. - Sent from MamaCare"
+        let encodedMessage = message.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         
-        // Reset Form (optional, maybe keep it until done?)
-        // selectedMood = nil
-        // notes = ""
+        if let url = URL(string: "sms:\(cleanNumber)&body=\(encodedMessage)"), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else if let url = URL(string: "sms:\(cleanNumber)"), UIApplication.shared.canOpenURL(url) {
+            // Fallback without body if the first one fails
+            UIApplication.shared.open(url)
+        }
     }
 }
 
@@ -216,7 +292,7 @@ struct MoodCircleButton: View {
         switch mood {
         case .good: return "face.smiling"
         case .okay: return "face.dashed"
-        case .notGood: return "face.frown"
+        case .notGood: return "face.smiling.inverse"  // Using inverse smiley for better compatibility
         }
     }
     

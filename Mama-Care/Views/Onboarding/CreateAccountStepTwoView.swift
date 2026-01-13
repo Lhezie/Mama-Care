@@ -2,7 +2,7 @@
 //  CreateAccountView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 06/11/2025.
+//  Created by Elizabeth Enechaziam on 06/11/2025.
 //
 
 
@@ -23,14 +23,7 @@ struct CreateAccountStepTwoView: View {
     var onBack: () -> Void
     var onCreateAccount: () -> Void
 
-    let countries = ["United Kingdom", "Nigeria"]
-    let dialCodes = ["+44", "+234"]
-
-    let countryFlags: [String: String] = [
-        "Nigeria": "🇳🇬",
-        "United Kingdom": "🇬🇧"
-        
-    ]
+    // Local Data (Removed Country/Flags as they are now in Step 1)
     
     @State private var showError = false
     @State private var errorMessage = ""
@@ -59,7 +52,7 @@ struct CreateAccountStepTwoView: View {
         .navigationBarBackButtonHidden(true)
     }
 
-    // MARK: - Subviews
+    //  Subviews
 
     private var headerView: some View {
         LinearGradient(
@@ -105,8 +98,7 @@ struct CreateAccountStepTwoView: View {
                 text: $onboardingVM.user.email
             )
 
-            countryPicker
-            mobileNumberInput
+            // Country and Mobile Number removed (Moved to Step 1)
 
             inputField(
                 label: "Password",
@@ -143,6 +135,8 @@ struct CreateAccountStepTwoView: View {
 
     private var progressIndicator: some View {
         HStack {
+            // Step 2 is now Step 3 in logical flow (if Cloud) but visually we can keep it as "Final Step" or adjust.
+            // For now, let's keep it simple.
             Circle()
                 .fill(Color(.sRGB, red: 0.0, green: 0.733, blue: 0.655))
                 .frame(width: 32, height: 32)
@@ -156,74 +150,6 @@ struct CreateAccountStepTwoView: View {
                 .fill(Color(.sRGB, red: 0.0, green: 0.733, blue: 0.655))
                 .frame(width: 32, height: 32)
                 .overlay(Text("2").foregroundColor(.white))
-        }
-    }
-
-    private var countryPicker: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Country")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-
-            Menu {
-                ForEach(countries, id: \.self) { country in
-                    Button {
-                        onboardingVM.user.country = country
-                        if country == "Nigeria" {
-                            onboardingVM.selectedDialCode = "+234"
-                        } else {
-                            onboardingVM.selectedDialCode = "+44"
-                        }
-                    } label: {
-                        Text("\(countryFlags[country] ?? "") \(country)")
-                    }
-                }
-            } label: {
-                HStack {
-                    Text("\(countryFlags[onboardingVM.user.country] ?? "") \(onboardingVM.user.country)")
-                    Spacer()
-                    Image(systemName: "chevron.down")
-                        .foregroundColor(.gray)
-                }
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(10)
-            }
-        }
-    }
-
-    private var mobileNumberInput: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Mobile Number")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-
-            HStack(spacing: 8) {
-                Menu {
-                    ForEach(dialCodes, id: \.self) { code in
-                        Button(code) {
-                            onboardingVM.selectedDialCode = code
-                        }
-                    }
-                } label: {
-                    HStack {
-                        Text(onboardingVM.selectedDialCode)
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                            .foregroundColor(.gray)
-                    }
-                    .padding()
-                    .frame(width: 90)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(10)
-                }
-
-                TextField("Mobile number", text: $onboardingVM.user.mobileNumber)
-                    .keyboardType(.numberPad)
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(10)
-            }
         }
     }
 
@@ -269,7 +195,7 @@ struct CreateAccountStepTwoView: View {
     }
 
     private func validateAndContinue() {
-        if onboardingVM.user.email.isEmpty || onboardingVM.password.isEmpty || onboardingVM.confirmPassword.isEmpty || onboardingVM.user.mobileNumber.isEmpty {
+        if onboardingVM.user.email.isEmpty || onboardingVM.password.isEmpty || onboardingVM.confirmPassword.isEmpty {
             errorMessage = "Please fill in all fields"
             showError = true
             showSuccess = false
@@ -283,8 +209,8 @@ struct CreateAccountStepTwoView: View {
             return
         }
 
-        if onboardingVM.password.count < 6 {
-            errorMessage = "Password must be at least 6 characters"
+        if !onboardingVM.isPasswordStrong(onboardingVM.password) {
+            errorMessage = "Password must be at least 6 characters, contain 1 uppercase letter and 1 special character"
             showError = true
             showSuccess = false
             return
@@ -306,7 +232,7 @@ struct CreateAccountStepTwoView: View {
         }
     }
 
-    // MARK: - Reusable Input Field
+    //  Reusable Input Field
     @ViewBuilder
     private func inputField(label: String, placeholder: String, text: Binding<String>, isSecure: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 6) {

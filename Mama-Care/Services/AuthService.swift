@@ -2,7 +2,7 @@
 //  AuthService.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 24/11/2025.
+//  Created by Elizabeth Enechaziam on 24/11/2025.
 //
 
 import Foundation
@@ -12,7 +12,26 @@ import Combine
 class AuthService {
     static let shared = AuthService()
     
-    private init() {}
+    @Published var user: FirebaseAuth.User?
+    private var handle: AuthStateDidChangeListenerHandle?
+    
+    private init() {
+        // Listen for auth state changes
+        handle = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
+            self?.user = user
+            if let user = user {
+                print(" AuthService: User state changed -> Logged in as \(user.uid)")
+            } else {
+                print(" AuthService: User state changed -> Logged out")
+            }
+        }
+    }
+    
+    deinit {
+        if let handle = handle {
+            Auth.auth().removeStateDidChangeListener(handle)
+        }
+    }
     
     // MARK: - Sign Up
     func signUp(email: String, password: String) -> Future<AuthDataResult, Error> {
@@ -43,6 +62,19 @@ class AuthService {
     // MARK: - Sign Out
     func signOut() throws {
         try Auth.auth().signOut()
+    }
+    
+    // MARK: - Password Reset
+    func sendPasswordResetEmail(email: String) -> Future<Void, Error> {
+        return Future { promise in
+            Auth.auth().sendPasswordReset(withEmail: email) { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
+            }
+        }
     }
     
     // MARK: - Delete Account

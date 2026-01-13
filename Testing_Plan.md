@@ -365,10 +365,10 @@
 6. On a scale of 1-10, how likely are you to recommend this app?
 
 ### Success Criteria
-- ✅ 80% complete onboarding without help
-- ✅ 90% can navigate to key features
-- ✅ 70% understand vaccination schedule
-- ✅ Average rating ≥ 7/10
+-80% complete onboarding without help
+-90% can navigate to key features
+-70% understand vaccination schedule
+-Average rating ≥ 7/10
 
 ---
 
@@ -395,24 +395,24 @@
 ## Testing Priority & Timeline
 
 ### **Phase 1: Critical (Week 1-2)** - MVP Must-Have
-- ✅ Manual testing of all core flows
-- ✅ Country-specific data validation (UK & Nigeria)
-- ✅ Offline functionality testing
-- ✅ Subscription flow (Sandbox)
-- ✅ Device compatibility (3-4 devices)
+-Manual testing of all core flows
+-Country-specific data validation (UK & Nigeria)
+-Offline functionality testing
+-Subscription flow (Sandbox)
+-Device compatibility (3-4 devices)
 
 ### **Phase 2: Important (Week 3-4)** - Pre-launch
-- ✅ Unit tests for critical logic
-- ✅ Performance testing
-- ✅ Accessibility testing
-- ✅ Edge cases & error handling
-- ✅ Security audit
+-Unit tests for critical logic
+-Performance testing
+-Accessibility testing
+-Edge cases & error handling
+-Security audit
 
 ### **Phase 3: Validation (Week 5-6)** - User Feedback
-- ✅ User acceptance testing (5-10 users)
-- ✅ Beta testing (TestFlight)
-- ✅ Bug fixes from feedback
-- ✅ Final App Store prep
+-User acceptance testing (5-10 users)
+-Beta testing (TestFlight)
+-Bug fixes from feedback
+-Final App Store prep
 
 ---
 

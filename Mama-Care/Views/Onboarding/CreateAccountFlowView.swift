@@ -2,58 +2,7 @@
 //  CreateAccountFlowView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 06/11/2025.
-//
-
-//import SwiftUI
-//
-//struct CreateAccountFlowView: View {
-//    @StateObject private var onboardingVM = OnboardingViewModel()
-//    @State private var currentStep = 1
-//
-//    var body: some View {
-//        NavigationStack {
-//            Group {
-//                switch currentStep {
-//                case 1:
-//                    CreateAccountStepOneView(
-//                        onboardingVM: onboardingVM,
-//                        onNext: {
-//                            currentStep = 2
-//                        }
-//                    )
-//
-//                case 2:
-//                    CreateAccountStepTwoView(
-//                        onboardingVM: onboardingVM,
-//                        onBack: {
-//                            currentStep = 1
-//                        },
-//                        onCreateAccount: {
-//                            // Proceed to Consent Screen
-//                            currentStep = 3
-//                        }
-//                    )
-//
-//                case 3:
-//                    ConsentScreenView(
-//                        onboardingVM: onboardingVM,
-//                        onNext: {
-//                            // Handle what happens after consent (e.g., finish onboarding or go to main app)
-//                            // For now, we might just reset or print
-//                            print("Onboarding Flow Completed from CreateAccountFlowView")
-//                        },
-//                        onBack: {
-//                            currentStep = 2
-//                        }
-//                    )
-//                default:
-//                    EmptyView()
-//                }
-//            }
-//        }
-//    }
-//}
+//  Created by Elizabeth Enechaziam on 06/11/2025.
 
 
 import SwiftUI
@@ -64,9 +13,7 @@ struct CreateAccountFlowView: View {
     @State private var currentStep = 1
 
     var body: some View {
-        NavigationStack {
-            currentStepView
-        }
+        currentStepView
     }
     
     @ViewBuilder
@@ -95,7 +42,7 @@ struct CreateAccountFlowView: View {
             ConsentScreenView(
                 onboardingVM: onboardingVM,
                 onNext: {
-                    print("✅ CreateAccountFlowView - Moving from Consent to UserTypeSelection")
+                    print("CreateAccountFlowView - Moving from Consent to UserTypeSelection")
                     currentStep = 4
                 },
                 onBack: {
@@ -107,7 +54,7 @@ struct CreateAccountFlowView: View {
             UserTypeSelectionView(
                 onboardingVM: onboardingVM,
                 onNext: {
-                    print("✅ CreateAccountFlowView - Moving from UserTypeSelection to DateCapture")
+                    print("CreateAccountFlowView - Moving from UserTypeSelection to DateCapture")
                     currentStep = 5
                 },
                 onBack: {
@@ -119,7 +66,7 @@ struct CreateAccountFlowView: View {
             DateCaptureView(
                 onboardingVM: onboardingVM,
                 onNext: {
-                    print("✅ CreateAccountFlowView - Moving from DateCapture to EmergencyContacts")
+                    print("CreateAccountFlowView - Moving from DateCapture to EmergencyContacts")
                     currentStep = 6
                 },
                 onBack: {
@@ -130,13 +77,13 @@ struct CreateAccountFlowView: View {
         case 6:
             EmergencyContactsView(
                 onFinish: {
-                    print("✅ CreateAccountFlowView - Completing onboarding")
+                    print("CreateAccountFlowView - Completing onboarding")
                     viewModel.completeOnboarding(
                         with: onboardingVM.user,
                         password: onboardingVM.password,
                         storage: onboardingVM.storageOption,
                         wantsReminders: onboardingVM.wantsReminders
-                    )
+                    ) { _ in }
                 },
                 onBack: {
                     currentStep = 5

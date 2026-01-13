@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Vaccine Schedule Models
+//  Vaccine Schedule Models
 
 struct VaccineScheduleData: Codable {
     let meta: VaccineMeta

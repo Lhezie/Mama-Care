@@ -2,9 +2,12 @@
 //  DataModels.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 03/11/2025.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
 import SwiftUI
+
+//  User & Authentication
+
 struct User: Identifiable, Codable {
     var id = UUID()
     var firstName: String
@@ -18,16 +21,27 @@ struct User: Identifiable, Codable {
     var storageMode: StorageMode = .deviceOnly
     var privacyAcceptedAt: Date?
     var notificationsWanted: Bool = true
+    var checkInTimes: [Int] = [480, 840, 1200] // Minutes since midnight: 08:00 (480), 14:00 (840), 20:00 (1200)
     var emergencyContacts: [EmergencyContact] = []
+    var isPremium: Bool = false
+    var escalationEnabled: Bool = false
     
     // Add these computed properties
     var pregnancyWeek: Int {
-        guard let dueDate = expectedDeliveryDate else { return 0 }
-        return calculatePregnancyWeek(from: dueDate)
+        guard let edd = expectedDeliveryDate,
+              userType == .pregnant else { return 0 }
+        return MamaCareDateHelper.pregnancyWeek(edd: edd)
     }
     
     var totalWeeks: Int {
         return 40 // Standard pregnancy duration
+    }
+    
+    /// Optional: postpartum week for users with a child.
+    var postpartumWeek: Int {
+        guard let birthDate = birthDate,
+              userType == .hasChild else { return 0 }
+        return MamaCareDateHelper.postpartumWeek(birthDate: birthDate)
     }
     
     init(firstName: String = "", lastName: String = "", email: String = "", country: String = "United Kingdom", mobileNumber: String = "", userType: UserType? = nil, expectedDeliveryDate: Date? = nil, birthDate: Date? = nil) {
@@ -39,13 +53,6 @@ struct User: Identifiable, Codable {
         self.userType = userType
         self.expectedDeliveryDate = expectedDeliveryDate
         self.birthDate = birthDate
-    }
-    
-    private func calculatePregnancyWeek(from dueDate: Date) -> Int {
-        let calendar = Calendar.current
-        let today = Date()
-        let weeksDifference = calendar.dateComponents([.weekOfYear], from: today, to: dueDate).weekOfYear ?? 0
-        return max(0, 40 - weeksDifference)
     }
     
     var needsOnboarding: Bool {
@@ -72,6 +79,8 @@ enum StorageMode: String, CaseIterable, Codable {
     case cloud = "Cloud (Firebase)"
 }
 
+//  Emergency Contacts
+
 struct EmergencyContact: Identifiable, Codable {
     var id = UUID()
     var name: String
@@ -83,6 +92,8 @@ struct EmergencyContact: Identifiable, Codable {
         !phoneNumber.isEmpty || !email.isEmpty
     }
 }
+
+//  Mood Tracking
 
 struct MoodCheckIn: Identifiable, Codable {
     var id = UUID()
@@ -120,39 +131,9 @@ enum MoodType: String, CaseIterable, Codable {
     }
 }
 
-struct Vaccine: Identifiable, Codable {
-    var id = UUID()
-    var name: String
-    var doseNumber: String
-    var recommendedWeek: Int
-    var dueDate: Date
-    var isCompleted: Bool
-    
-    // Custom initializer
-    init(name: String, doseNumber: String, recommendedWeek: Int, dueDate: Date, isCompleted: Bool = false) {
-        self.name = name
-        self.doseNumber = doseNumber
-        self.recommendedWeek = recommendedWeek
-        self.dueDate = dueDate
-        self.isCompleted = isCompleted
-    }
-}
+//  Vaccination
 
-struct AIChatMessage: Identifiable, Codable {
-    var id = UUID()
-    var content: String
-    var isUser: Bool
-    var timestamp: Date
-    
-    // Custom initializer
-    init(content: String, isUser: Bool, timestamp: Date = Date()) {
-        self.content = content
-        self.isUser = isUser
-        self.timestamp = timestamp
-    }
-}
-
-// MARK: - Vaccine Schedule Models
+//  Vaccine Schedule Models
 
 enum VaccineStatus: String, Codable {
     case upcoming
@@ -163,6 +144,7 @@ enum VaccineStatus: String, Codable {
 
 struct VaccineItem: Identifiable, Codable {
     let id: UUID
+    let code: String // Stable identifier from JSON
     let name: String
     let ageRange: String
     let description: String
@@ -170,8 +152,9 @@ struct VaccineItem: Identifiable, Codable {
     var status: VaccineStatus
     var completedDate: Date?
     
-    init(id: UUID = UUID(), name: String, ageRange: String, description: String, dueDate: Date?, status: VaccineStatus, completedDate: Date? = nil) {
+    init(id: UUID = UUID(), code: String, name: String, ageRange: String, description: String, dueDate: Date?, status: VaccineStatus, completedDate: Date? = nil) {
         self.id = id
+        self.code = code
         self.name = name
         self.ageRange = ageRange
         self.description = description
@@ -181,9 +164,9 @@ struct VaccineItem: Identifiable, Codable {
     }
 }
 
-// MARK: - Chat Models
+//  Chat
 
-struct ChatMessage: Identifiable, Codable {
+struct ChatMessage: Identifiable, Codable, Equatable {
     let id: UUID
     let content: String
     let isUser: Bool
@@ -197,9 +180,7 @@ struct ChatMessage: Identifiable, Codable {
     }
 }
 
-
-
-// MARK: - Identifiable Consent Point
+//  UI Models
 public struct ConsentPoint: Identifiable {
     public let id = UUID()
     public let color: Color

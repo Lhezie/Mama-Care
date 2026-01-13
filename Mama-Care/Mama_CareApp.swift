@@ -2,7 +2,7 @@
 //  Mama_CareApp.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 03/11/2025.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
 
 import SwiftUI
@@ -12,7 +12,7 @@ import SwiftData
 @main
 struct MamaCareApp: App {
     @StateObject private var viewModel = MamaCareViewModel()
-    @StateObject private var onboardingVM = OnboardingViewModel()   // ✅ Add this
+    @StateObject private var onboardingVM = OnboardingViewModel()   
     @State private var showSplash = true
 
     init() {
@@ -21,33 +21,51 @@ struct MamaCareApp: App {
 
     var body: some Scene {
         WindowGroup {
+            ContentView(viewModel: viewModel, onboardingVM: onboardingVM, showSplash: $showSplash)
+                .preferredColorScheme(.light)
+                .modelContainer(for: [UserProfile.self, MoodEntry.self, Contact.self, VaccineRecord.self])
+        }
+    }
+}
+
+struct ContentView: View {
+    @ObservedObject var viewModel: MamaCareViewModel
+    @ObservedObject var onboardingVM: OnboardingViewModel
+    @Binding var showSplash: Bool
+    @Environment(\.modelContext) private var modelContext
+    
+    var body: some View {
+        ZStack {
             if showSplash {
                 SplashScreenView {
                     showSplash = false
                 }
                 .environmentObject(viewModel)
-                .environmentObject(onboardingVM)   // ✅ Inject here too
+                .environmentObject(onboardingVM)
             } else {
                 Group {
                     if viewModel.isLoggedIn {
                         if viewModel.currentUser?.needsOnboarding ?? true {
                             MainTabView()
                                 .environmentObject(viewModel)
-                                .environmentObject(onboardingVM)   // ✅ Add here
+                                .environmentObject(onboardingVM)
                         } else {
                             MainTabView()
                                 .environmentObject(viewModel)
-                                .environmentObject(onboardingVM)   // ✅ Add here
+                                .environmentObject(onboardingVM)
                         }
                     } else {
                         AuthLandingView()
                             .environmentObject(viewModel)
-                            .environmentObject(onboardingVM)       // ✅ Add here
+                            .environmentObject(onboardingVM)
                     }
                 }
             }
         }
-        .modelContainer(for: [UserProfile.self, MoodEntry.self, Contact.self])
+        .onAppear {
+            // Inject the ModelContext into SwiftDataService when view appears
+            SwiftDataService.shared.setModelContext(modelContext)
+        }
     }
 }
 

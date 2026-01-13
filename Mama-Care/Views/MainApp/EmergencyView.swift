@@ -2,19 +2,21 @@
 //  EmergencyView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 03/11/2025.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
-
-
-
 
 import SwiftUI
 
 struct EmergencyView: View {
     @EnvironmentObject var viewModel: MamaCareViewModel
-    @State private var isSendingAlert = false
+    @Environment(\.presentationMode) var presentationMode
+    
+    @State private var isSendingAlert = false // Used for simulator fallback or automated "processing" state
     @State private var alertSent = false
     @State private var showingAlertConfirmation = false
+    @State private var isShowingMessageComposer = false
+    @State private var alertError: String?
+    @State private var showPaywall = false
 
     var body: some View {
         NavigationView {
@@ -24,12 +26,24 @@ struct EmergencyView: View {
                     header
 
                     if alertSent {
-                        EmergencySuccessView()
-                    } else if isSendingAlert {
-                        EmergencySendingView()
+                        EmergencySuccessView {
+                            // Reset or dismiss if presented modally
+                            alertSent = false
+                            if viewModel.showEmergencyEscalation {
+                                viewModel.showEmergencyEscalation = false
+                            }
+                        }
                     } else {
                         EmergencyContactsSection()
-                        
+                    }
+                    
+                    // Show error if any
+                    if let error = alertError {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .font(.caption)
+                            .multilineTextAlignment(.center)
+                            .padding()
                     }
                 }
                 .padding(.vertical)
@@ -39,12 +53,49 @@ struct EmergencyView: View {
                 Button("Cancel", role: .cancel) {}
                 Button("Send Alert", role: .destructive) { sendEmergencyAlert() }
             } message: {
-                Text("This will alert all contacts with your location.")
+                Text("This will compose a message to your emergency contacts with your status.")
+            }
+            .sheet(isPresented: $isShowingMessageComposer) {
+                MessageComposerView(
+                    recipients: viewModel.emergencyContacts.filter { $0.hasContactInfo }.map { $0.phoneNumber },
+                    body: "Help! I haven't checked in for 48 hours. Please check on me."
+                ) { result in
+                    // Handle result
+                    switch result {
+                    case .sent:
+                        alertSent = true
+                    case .failed:
+                        alertError = "Failed to send message."
+                    case .cancelled:
+                        break
+                    @unknown default:
+                        break
+                    }
+                }
+            }
+            // If opened via escalation, auto-trigger the flow
+            .onAppear {
+                if viewModel.showEmergencyEscalation {
+                     // Check if we haven't already acted
+                     if !alertSent && !isSendingAlert && !isShowingMessageComposer {
+                         // Check premium status before auto-escalation
+                         if viewModel.currentUser?.isPremium == true {
+                             sendEmergencyAlert()
+                         } else {
+                             // Show paywall for non-premium users
+                             showPaywall = true
+                         }
+                     }
+                }
+            }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
+                    .environmentObject(viewModel)
             }
         }
     }
 
-    // MARK: - Header
+    //  Header
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("MamaCare")
@@ -54,57 +105,50 @@ struct EmergencyView: View {
             Text("Welcome, \(viewModel.currentUser?.firstName ?? "User")")
                 .font(.headline)
                 .foregroundColor(.secondary)
+            
+            if viewModel.showEmergencyEscalation {
+                Text("Escalation triggered due to inactivity.")
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .padding(.top, 4)
+            }
         }
         .padding(.horizontal)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-
-    
-    
-    
-    
-
-    // MARK: - Simulated Alert Logic
+    //  Alert Logic
     private func sendEmergencyAlert() {
-        isSendingAlert = true
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            isSendingAlert = false
-            alertSent = true
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                alertSent = false
-            }
+        alertError = nil
+        
+        // 0. Check premium status
+        guard viewModel.currentUser?.isPremium == true else {
+            showPaywall = true
+            return
         }
-    }
-}
-
-struct EmergencySendingView: View {
-    var body: some View {
-        VStack(spacing: 24) {
-            ProgressView()
-                .scaleEffect(1.5)
-                .tint(.red)
+        
+        // 1. Check if device can send text
+        if MessageComposerView.canSendText() {
+            // 2. Check if we have contacts
+            let contacts = viewModel.emergencyContacts.filter { $0.hasContactInfo && !$0.phoneNumber.isEmpty }
             
-            VStack(spacing: 12) {
-                Text("Sending Emergency Alert...")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                
-                Text("Notifying your emergency contacts with your location and emergency details.")
-                    .font(.body)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
+            if !contacts.isEmpty {
+                isShowingMessageComposer = true
+            } else {
+                alertError = "No contacts with phone numbers found."
             }
+        } else {
+            // Simulator / No-Cellular Fallback
+            // User requested no simulation. Just show error.
+            print("Device cannot send text.")
+            alertError = "SMS not available on this device."
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.vertical, 100)
     }
 }
 
 struct EmergencySuccessView: View {
+    var onDismiss: (() -> Void)?
+    
     var body: some View {
         VStack(spacing: 24) {
             Image(systemName: "checkmark.circle.fill")
@@ -112,15 +156,23 @@ struct EmergencySuccessView: View {
                 .foregroundColor(.green)
             
             VStack(spacing: 12) {
-                Text("Alert Sent Successfully!")
+                Text("Alert Processed!")
                     .font(.title2)
                     .fontWeight(.bold)
                 
-                Text("Your emergency contacts have been notified with your location. Help is on the way.")
+                Text("Your emergency message has been handled.")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 40)
+            }
+            
+            if let onDismiss = onDismiss {
+                Button("Done") {
+                    onDismiss()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.blue)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -2,7 +2,7 @@
 //  EmergencyContactsSection.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 18/11/2025.
+//  Created by Elizabeth Enechaziam on 18/11/2025.
 //
 
 
@@ -13,7 +13,10 @@ struct EmergencyContactsSection: View {
     @EnvironmentObject var viewModel: MamaCareViewModel
     @State private var showingAddSheet = false
     @State private var editingContact: EmergencyContact? = nil
+    @State private var showLimitAlert = false
     var showHeader: Bool = true
+    
+    private let maxContacts = 2
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -62,24 +65,29 @@ struct EmergencyContactsSection: View {
 
             // Add Contact Button (Outline Style)
             Button {
-                editingContact = nil
-                showingAddSheet = true
+                if viewModel.emergencyContacts.count >= maxContacts {
+                    showLimitAlert = true
+                } else {
+                    editingContact = nil
+                    showingAddSheet = true
+                }
             } label: {
                 HStack {
                     Image(systemName: "plus")
                     Text("Add Emergency Contact")
                 }
                 .font(.headline)
-                .foregroundColor(.black)
+                .foregroundColor(viewModel.emergencyContacts.count >= maxContacts ? .gray : .black)
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(Color.white)
                 .cornerRadius(8)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.mamaCarePrimary, lineWidth: 1)
+                        .stroke(viewModel.emergencyContacts.count >= maxContacts ? Color.gray.opacity(0.3) : Color.mamaCarePrimary, lineWidth: 1)
                 )
             }
+            .disabled(viewModel.emergencyContacts.count >= maxContacts)
             .padding(.horizontal)
 
             if viewModel.emergencyContacts.isEmpty {
@@ -93,17 +101,24 @@ struct EmergencyContactsSection: View {
                 contactToEdit: $editingContact,
                 onSave: { contact in
                     if let index = viewModel.emergencyContacts.firstIndex(where: { $0.id == contact.id }) {
-                        viewModel.emergencyContacts[index] = contact
+                        // Editing existing contact
+                        viewModel.updateEmergencyContact(contact)
                     } else {
+                        // Adding new contact
                         viewModel.addEmergencyContact(contact)
                     }
                 }
             )
             .environmentObject(viewModel)
         }
+        .alert("Contact Limit Reached", isPresented: $showLimitAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("You can only add up to \(maxContacts) emergency contacts.")
+        }
     }
 
-    // MARK: - Empty State
+    //  Empty State
     private var emptyState: some View {
         VStack(spacing: 20) {
             Image(systemName: "shield")
@@ -128,7 +143,7 @@ struct EmergencyContactsSection: View {
         .padding(.horizontal)
     }
 
-    // MARK: - Contacts list
+    //  Contacts list
 //                        } label: {
 //                            Label("Edit", systemImage: "pencil")
 //                        }

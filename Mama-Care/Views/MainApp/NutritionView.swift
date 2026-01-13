@@ -1,35 +1,43 @@
-//
-//  NutritionView.swift
-//  Mama-Care
-//
-//  Created by Udodirim Offia on 15/11/2025.
-//
-
 import SwiftUI
 
 struct NutritionView: View {
     @EnvironmentObject var viewModel: MamaCareViewModel
     
+    //  Computed helpers
+    
+    private var userWeekText: String? {
+        guard let user = viewModel.currentUser else { return nil }
+        let week = user.pregnancyWeek
+        return week > 0 ? "Week \(week)" : nil
+    }
+    
+    private var currentWeekNutrition: NutritionWeek? {
+        viewModel.getCurrentWeekNutrition()
+    }
+    
+    private var currentDayNutrition: NutritionDay? {
+        viewModel.getCurrentDayNutrition()
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                // Header
                 headerSection
                 
-                // This Week's Focus
-                if let weekData = viewModel.getCurrentWeekNutrition() {
+                if let weekData = currentWeekNutrition {
                     weekFocusSection(weekData: weekData)
                 }
                 
-                // Today's Meal Focus
-                if let dayData = viewModel.getCurrentDayNutrition() {
+                if let dayData = currentDayNutrition {
                     todaysMealSection(dayData: dayData)
-                    
-                    // Recommended Foods
                     recommendedFoodsSection(foods: dayData.foodSuggestions)
-                    
-                    // Water Intake
                     waterIntakeSection(cups: dayData.waterGoalCups)
+                } else {
+                    Text("Nutrition tips will appear here once your due date is set.")
+                        .font(.footnote)
+                        .foregroundColor(.mamaCareTextSecondary)
+                        .padding(.horizontal)
+                        .multilineTextAlignment(.center)
                 }
             }
             .padding()
@@ -38,7 +46,7 @@ struct NutritionView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    // MARK: - Header Section
+    //  Header Section
     
     private var headerSection: some View {
         VStack(spacing: 12) {
@@ -54,13 +62,10 @@ struct NutritionView: View {
                 .fontWeight(.bold)
                 .foregroundColor(.mamaCareTextPrimary)
             
-            if let user = viewModel.currentUser {
-                let week = user.pregnancyWeek
-                if week > 0 {
-                    Text("Week \(week)")
-                        .font(.subheadline)
-                        .foregroundColor(.mamaCareTextSecondary)
-                }
+            if let weekText = userWeekText {
+                Text(weekText)
+                    .font(.subheadline)
+                    .foregroundColor(.mamaCareTextSecondary)
             }
         }
         .frame(maxWidth: .infinity)
@@ -70,7 +75,7 @@ struct NutritionView: View {
         .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
     }
     
-    // MARK: - Week Focus Section
+    //  Week Focus Section
     
     private func weekFocusSection(weekData: NutritionWeek) -> some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -93,7 +98,7 @@ struct NutritionView: View {
         .cornerRadius(16)
     }
     
-    // MARK: - Today's Meal Section
+    //  Today's Meal Section
     
     private func todaysMealSection(dayData: NutritionDay) -> some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -117,7 +122,7 @@ struct NutritionView: View {
         .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
     }
     
-    // MARK: - Recommended Foods Section
+    //  Recommended Foods Section
     
     private func recommendedFoodsSection(foods: [String]) -> some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -154,7 +159,7 @@ struct NutritionView: View {
         .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
     }
     
-    // MARK: - Water Intake Section
+    //  Water Intake Section
     
     private func waterIntakeSection(cups: Int) -> some View {
         VStack(spacing: 16) {
@@ -184,7 +189,7 @@ struct NutritionView: View {
     }
 }
 
-// MARK: - Preview
+//  Preview
 #Preview {
     NutritionView()
         .environmentObject({

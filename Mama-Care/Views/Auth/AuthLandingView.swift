@@ -2,7 +2,7 @@
 //  AuthLandingView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 04/11/2025.
+//  Created by Elizabeth Enechaziam on 04/11/2025.
 //
 
 

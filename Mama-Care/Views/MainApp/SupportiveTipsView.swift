@@ -2,16 +2,20 @@
 //  SupportiveTipsView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 19/11/2025.
+//  Created by Elizabeth Enechaziam on 19/11/2025.
 //
 
 import SwiftUI
 
 struct SupportiveTipsView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var viewModel: MamaCareViewModel
+    @State private var showPaywall = false
+    
     var onEmergencyContact: () -> Void
     var onTalkToAI: () -> Void
     var onCalmingAudio: () -> Void
+    var onDismiss: () -> Void
     
     var body: some View {
         ZStack {
@@ -57,16 +61,24 @@ struct SupportiveTipsView: View {
                     
                     // Action Buttons
                     VStack(spacing: 16) {
-                        Button(action: onEmergencyContact) {
+                        Button(action: {
+                            if viewModel.currentUser?.isPremium == true {
+                                onEmergencyContact()
+                            } else {
+                                showPaywall = true
+                            }
+                        }) {
                             HStack {
                                 Image(systemName: "exclamationmark.triangle")
                                 Text("Alert Emergency Contact")
                                 Spacer()
-                                Image(systemName: "lock")
+                                if viewModel.currentUser?.isPremium != true {
+                                    Image(systemName: "lock.fill")
+                                }
                             }
                             .foregroundColor(.white)
                             .padding()
-                            .background(Color.mamaCareOverdue) // Red
+                            .background(viewModel.currentUser?.isPremium == true ? Color.mamaCareOverdue : Color.gray)
                             .cornerRadius(12)
                         }
                         
@@ -107,7 +119,10 @@ struct SupportiveTipsView: View {
                     .padding(.horizontal, 20)
                     
                     // Close Button (X)
-                    Button(action: { dismiss() }) {
+                    Button(action: {
+                        dismiss()
+                        onDismiss()
+                    }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 20))
                             .foregroundColor(.mamaCareTextSecondary)
@@ -134,6 +149,10 @@ struct SupportiveTipsView: View {
                     .padding(.bottom, 20)
                 }
             }
+        }
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
+                .environmentObject(viewModel)
         }
     }
 }

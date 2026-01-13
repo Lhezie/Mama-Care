@@ -2,7 +2,7 @@
 //  MoodTrendChartView.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 24/11/2025.
+//  Created by Elizabeth Enechaziam on 24/11/2025.
 //
 
 import SwiftUI
@@ -37,7 +37,7 @@ struct MoodTrendChartView: View {
                 Chart {
                     ForEach(moodCheckIns.sorted(by: { $0.date < $1.date })) { checkIn in
                         LineMark(
-                            x: .value("Date", checkIn.date, unit: .day),
+                            x: .value("Date", checkIn.date),
                             y: .value("Mood", checkIn.moodType.chartValue)
                         )
                         .foregroundStyle(Color.mamaCarePrimary)
@@ -49,7 +49,7 @@ struct MoodTrendChartView: View {
                         .interpolationMethod(.catmullRom)
                         
                         AreaMark(
-                            x: .value("Date", checkIn.date, unit: .day),
+                            x: .value("Date", checkIn.date),
                             y: .value("Mood", checkIn.moodType.chartValue)
                         )
                         .foregroundStyle(

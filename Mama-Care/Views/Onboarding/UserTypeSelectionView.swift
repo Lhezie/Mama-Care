@@ -22,7 +22,7 @@ struct UserTypeSelectionView: View {
         .background(Color(hex: "F0FDFA").ignoresSafeArea())
     }
     
-    // MARK: - Header Section
+    //  Header Section
     private var headerSection: some View {
         VStack(spacing: 8) {
             Text("Tell Us About You")
@@ -38,7 +38,7 @@ struct UserTypeSelectionView: View {
         .padding(.bottom, 32)
     }
     
-    // MARK: - Content Section
+    //  Content Section
     private var contentSection: some View {
         ScrollView {
             VStack(spacing: 16) {
@@ -53,7 +53,7 @@ struct UserTypeSelectionView: View {
         }
     }
     
-    // MARK: - User Type Cards
+    //  User Type Cards
     private var userTypeCards: some View {
         VStack(spacing: 16) {
             UserTypeCard(
@@ -79,7 +79,7 @@ struct UserTypeSelectionView: View {
         .padding(.horizontal)
     }
     
-    // MARK: - Navigation Buttons
+    //  Navigation Buttons
     private var navigationButtons: some View {
         HStack(spacing: 16) {
             Button {

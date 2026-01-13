@@ -2,13 +2,13 @@
 //  Colors.swift
 //  Mama-Care
 //
-//  Created by Udodirim Offia on 03/11/2025.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
 
 // Add this to a new file: Views/DesignSystem/Colors.swift
 import SwiftUI
 
-// MARK: - Hex Initializer
+//  Hex Initializer
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
@@ -36,23 +36,24 @@ extension Color {
     }
 }
 
-// MARK: - MamaCare Design System Colors
+//  MamaCare Design System Colors
 extension Color {
-    // MARK: - Primary Colors
+    //  Primary Colors
     static let mamaCarePrimary = Color(hex: "00BBA7")
     static let mamaCarePrimaryBg = Color(hex: "F0FDFA")
+    static let mamaCarePrimaryLight = Color(hex: "E0F2F1") // Light version of primary teal
     static let mamaCarePrimaryDark = Color(hex: "009966")
     static let mamaCareAccent = Color(hex: "009689")
     static let mamaCareTeal = Color(hex: "00C4B4")
     static let mamaCareTealDark = Color(hex: "00A88F")
     
-    // MARK: - Status Colors
+    //  Status Colors
     static let mamaCareError = Color(hex: "FB2C36")
     static let mamaCareSuccess = Color(hex: "008236")
     static let mamaCareWarning = Color(hex: "F59E0B")
     static let mamaCareInfo = Color(hex: "3B82F6")
     
-    // MARK: - Vaccine Status Colors
+    //  Vaccine Status Colors
     static let mamaCareUpcoming = Color(hex: "3B82F6")      // Blue
     static let mamaCareUpcomingBg = Color(hex: "DBEAFE")    // Light Blue
     static let mamaCareDue = Color(hex: "F59E0B")           // Orange
@@ -62,23 +63,23 @@ extension Color {
     static let mamaCareCompleted = Color(hex: "10B981")     // Green
     static let mamaCareCompletedBg = Color(hex: "D1FAE5")   // Light Green
     
-    // MARK: - Text Colors
+    //  Text Colors
     static let mamaCareTextPrimary = Color(hex: "1F2937")   // Dark Gray
     static let mamaCareTextSecondary = Color(hex: "6B7280") // Medium Gray
     static let mamaCareTextTertiary = Color(hex: "9CA3AF") // Light Gray
     static let mamaCareTextDark = Color(hex: "4B5563")      // Darker Gray
     
-    // MARK: - Background Colors
+    //  Background Colors
     static let mamaCareGrayBackground = Color(hex: "F3F3F5")
     static let mamaCareGrayLight = Color(hex: "F9FAFB")
     static let mamaCareGrayMedium = Color(hex: "F3F4F6")
     static let mamaCareGrayBorder = Color(hex: "E5E7EB")
     
-    // MARK: - Icon Background Colors
+    //  Icon Background Colors
     static let mamaCareIconBlue = Color(hex: "D0E8FF")
     static let mamaCareIconPurple = Color(hex: "F3E8FF")
     
-    // MARK: - Accent Colors
+    //  Accent Colors
     static let mamaCarePink = Color(hex: "EC4899")
     static let mamaCarePinkLight = Color(hex: "FCE7F3")
     static let mamaCarePurple = Color(hex: "8B5CF6")
@@ -91,7 +92,7 @@ extension Color {
     static let mamaCarePurpleLight = Color(hex: "FDF4FF")
     static let mamaCareDarkGreen = Color(hex: "004D40")
     
-    // MARK: - Gradients
+    //  Gradients
     static let mamaCareGradient = LinearGradient(
         gradient: Gradient(colors: [mamaCarePrimary, mamaCarePrimaryDark]),
         startPoint: .leading,
