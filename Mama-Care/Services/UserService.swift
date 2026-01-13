@@ -31,7 +31,8 @@ class UserService {
                   let encLastName = EncryptionService.shared.encryptString(user.lastName),
                   let encEmail = EncryptionService.shared.encryptString(user.email),
                   let encPhone = EncryptionService.shared.encryptString(user.mobileNumber) else {
-                promise(.failure(NSError(domain: "UserService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Encryption failed for user data"])))
+                promise(.failure(NSError(domain: "UserService", code: -1, userInfo: [NSLocalizedDescriptionKey: 
+                "Encryption failed for user data"])))
                 return
             }
             
@@ -199,23 +200,20 @@ class UserService {
             }
         }
     }
+
     func updateVaccineRecord(uid: String, record: VaccineRecord) -> Future<Void, Error> {
         return Future { [weak self] promise in
             guard let self = self else { return }
             
             do {
-                // Convert VaccineRecord (SwiftData model) to a dictionary or simpler struct for Firestore
-                // Since VaccineRecord is a @Model, we might need to map it manually or make it Codable if not already
-                // For now, let's assume we map the essential fields
-                
+               
+                // Update the vaccine record in Firestore
                 let data: [String: Any] = [
                     "code": record.code,
                     "completedDate": record.completedDate ?? Date(),
                     "updatedAt": FieldValue.serverTimestamp()
                 ]
-                
-                // Use set(merge: true) to update or create
-                // We use the vaccine code as the document ID to prevent duplicates
+                // Used to determine the "late write" 
                 try self.db.collection("users").document(uid)
                     .collection("vaccines").document(record.code)
                     .setData(data, merge: true) { error in

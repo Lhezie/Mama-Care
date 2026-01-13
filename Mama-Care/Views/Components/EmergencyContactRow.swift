@@ -53,7 +53,8 @@ struct EmergencyContactRow: View {
                             if let url = URL(string: "tel://\(cleaned)"), UIApplication.shared.canOpenURL(url) {
                                 UIApplication.shared.open(url)
                             } else {
-                                errorMessage = "Calling is not supported on Simulator. You must use an actual iPhone."
+                                errorMessage = "Feature Unavailable: Calling/Messaging is not supported on Simulator. 
+                                You must use an actual iPhone."
                                 showingSimulatorError = true
                             }
                         } label: {
@@ -75,7 +76,8 @@ struct EmergencyContactRow: View {
                             if let url = URL(string: "sms://\(cleaned)"), UIApplication.shared.canOpenURL(url) {
                                 UIApplication.shared.open(url)
                             } else {
-                                errorMessage = "Messaging is not supported on Simulator. You must use an actual iPhone."
+                                errorMessage = "Feature Unavailable: Calling/Messaging is not supported on Simulator. 
+                                You must use an actual iPhone."
                                 showingSimulatorError = true
                             }
                         } label: {

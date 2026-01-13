@@ -33,7 +33,7 @@ class AuthService {
         }
     }
     
-    // MARK: - Sign Up
+    // Sign Up
     func signUp(email: String, password: String) -> Future<AuthDataResult, Error> {
         return Future { promise in
             Auth.auth().createUser(withEmail: email, password: password) { result, error in
@@ -46,7 +46,7 @@ class AuthService {
         }
     }
     
-    // MARK: - Sign In
+    // Sign In
     func signIn(email: String, password: String) -> Future<AuthDataResult, Error> {
         return Future { promise in
             Auth.auth().signIn(withEmail: email, password: password) { result, error in

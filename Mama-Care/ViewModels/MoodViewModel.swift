@@ -20,7 +20,7 @@ final class MoodViewModel: ObservableObject {
         self.swiftDataService = swiftDataService
     }
     
-    //  Public API
+    
     
     func addMoodCheckIn(_ checkIn: MoodCheckIn, for user: User?) {
         // 1. Update local state immediately for UI responsiveness

@@ -2,7 +2,7 @@
 //  FirestoreModels.swift
 //  Mama-Care
 //
-//  Created for Encryption Implementation.
+//  Created by Elizabeth Enechaziam on 03/11/2025.
 //
 
 import Foundation
@@ -68,6 +68,6 @@ struct EncryptedMoodDTO: Codable {
         case id
         case date
         case moodType
-        case encryptedNotes = "notes" // Map 'notes' in DB to our encrypted blob
+        case encryptedNotes = "notes" 
     }
 }

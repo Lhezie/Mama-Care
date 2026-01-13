@@ -16,7 +16,7 @@ class MoodService {
     
     private init() {}
     
-    // MARK: - Add Mood
+    //  Add Mood
     func addMood(_ mood: MoodCheckIn, userID: String) -> Future<Void, Error> {
         return Future { promise in
             // Encrypt Notes
@@ -46,7 +46,7 @@ class MoodService {
         }
     }
     
-    // MARK: - Fetch Moods
+    // Fetch Moods
     func fetchMoods(userID: String) -> Future<[MoodCheckIn], Error> {
         return Future { promise in
             self.db.collection("users").document(userID).collection("moods")

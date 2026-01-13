@@ -89,15 +89,14 @@ class MamaCareViewModel: ObservableObject {
         setupNetworkMonitoring()
         
         // Subscribe to Auth State Changes
-        // This replaces the manual loadUserData() call which was prone to race conditions
+   
         authService.$user
             .receive(on: DispatchQueue.main)
             .sink { [weak self] user in
                 guard let self = self else { return }
                 
                 // Only load if we have completed onboarding
-                // We don't check for nil user here because loadUserData handles the nil case (device-only fallback)
-                // But practically, we want to retry loading when auth state becomes ready
+             
                 if self.hasCompletedOnboarding {
                     print(" Auth State Updated. Triggering data load.")
                     self.loadUserData()

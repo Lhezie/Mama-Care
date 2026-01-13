@@ -96,7 +96,7 @@ class OnboardingViewModel: ObservableObject {
     
     
     
-    // OnboardingViewModel.swift
+  
 
     func validateConsent() -> Bool {
         acceptedTerms && acceptedPrivacy && storageOption != nil

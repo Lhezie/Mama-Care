@@ -37,7 +37,7 @@
 - [ ] Mood check-in scheduling (08:00, 14:00, 20:00)
 
 ### Encryption & Security
-- [ ] Data encryption with AES-256-GCM works
+- [ ] Data encryption with  works for both offline and online
 - [ ] Encryption key stored securely in Keychain
 - [ ] Decryption retrieves correct data
 - [ ] iCloud Keychain sync (if enabled)
