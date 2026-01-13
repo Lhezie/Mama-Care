@@ -4,9 +4,10 @@
 //
 //  Created by Elizabeth Enechaziam on 25/11/2025.
 //
+//
 
 import Foundation
-import FirebaseAILogic
+import GoogleGenerativeAI
 import Combine
 
 @MainActor
@@ -24,24 +25,28 @@ class AIService: ObservableObject {
     @Published var error: String?
     
     private let userService = UserService.shared
+    private var cancellables = Set<AnyCancellable>()
+    
+    // Injected by MamaCareViewModel
+    var currentUserID: UUID?
     
     private init() {
-        // Initialize Firebase AI with Gemini Developer API (FREE)
-       
+        // Initialize Gemini AI
         if !apiKey.isEmpty {
-            print(" Initializing Firebase AI with Gemini Developer API (free tier)")
+            print(" Initializing Gemini AI with GoogleGenerativeAI SDK")
             
-            // Initialize the Gemini 
-            let ai = FirebaseAI.firebaseAI(backend: .googleAI())
+            // Initialize the GenerativeModel
+            // using gemini-1.5-flash which is current fast/efficient model
+            model = GenerativeModel(name: "gemini-2.0-flash", apiKey: apiKey)
             
-            // Create a GenerativeModel
-            model = ai.generativeModel(modelName: "gemini-2.5-flash")
             startNewChat()
         } else {
             print("Gemini API Key not configured")
             error = "API Key missing"
         }
     }
+    
+    
     
     func startNewChat() {
         guard let model = model else {
@@ -50,16 +55,14 @@ class AIService: ObservableObject {
         }
         
         // Define the persona and system instructions via history
+        // Note: SDK uses [ModelContent] where parts is [Part]
         chat = model.startChat(history: [
-            ModelContent(role: "user", parts: "You are a supportive, empathetic assistant for a maternal health app called MamaCare. Your goal is to provide comforting, non-judgmental support to mothers who might be feeling stressed, anxious, or down.Offer gentle advice, encourage self-care, and always remind them to seek professional help if they are in crisis. Keep responses concise and warm."),
-            ModelContent(role: "model", parts: "I understand. I am ready to support the mothers of MamaCare with empathy and care.")
+            ModelContent(role: "user", parts: [.text("You are a supportive, empathetic assistant for a maternal health app called MamaCare. Your goal is to provide comforting, non-judgmental support to mothers who might be feeling stressed, anxious, or down.Offer gentle advice, encourage self-care, and always remind them to seek professional help if they are in crisis. Keep responses concise and warm.")]),
+            ModelContent(role: "model", parts: [.text("I understand. I am ready to support the mothers of MamaCare with empathy and care.")])
         ])
         messages = []
         error = nil
     }
-    
-    // Injected by MamaCareViewModel
-    var currentUserID: UUID?
     
     func sendMessage(_ text: String) async {
         guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
@@ -71,29 +74,49 @@ class AIService: ObservableObject {
         isLoading = true
         error = nil
         
-        // Scrub PII for privacy (Email & Phone)
         let scrubbedText = scrubPII(from: text)
         
-        // Add user message to UI immediately (show original to user)
         let userMessage = ChatMessage(content: text, isUser: true)
         messages.append(userMessage)
         
-        // Persist user message
         persistMessage(userMessage)
         
-        do {
-            // Send scrubbed text to AI
-            let response = try await chat.sendMessage(scrubbedText)
-            if let responseText = response.text {
-                let aiMessage = ChatMessage(content: responseText, isUser: false)
-                messages.append(aiMessage)
+        let maxRetries = 3
+        var attempt = 0
+        var success = false
+        
+        while attempt <= maxRetries && !success {
+            do {
+                let response = try await chat.sendMessage(scrubbedText)
                 
-                // Persist AI response
-                persistMessage(aiMessage)
+                if let responseText = response.text {
+                    let aiMessage = ChatMessage(content: responseText, isUser: false)
+                    messages.append(aiMessage)
+                    persistMessage(aiMessage)
+                    success = true
+                }
+            } catch {
+                let nsError = error as NSError
+                let isRateLimit = error.localizedDescription.contains("429") || 
+                                  error.localizedDescription.contains("quota") ||
+                                  error.localizedDescription.contains("exhausted")
+                
+                if isRateLimit && attempt < maxRetries {
+                    attempt += 1
+                    let delay = Double(attempt) * 1.5
+                    print("Retrying attempt \(attempt) in \(delay)s...")
+                    try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                    continue
+                }
+                
+                if isRateLimit {
+                    self.error = "The AI service is currently busy (high demand). Please try again in 1 minute."
+                } else {
+                    self.error = "Failed to send message: \(error.localizedDescription)"
+                }
+                print("AI Error: \(error)")
+                break
             }
-        } catch {
-            self.error = "Failed to send message: \(error.localizedDescription)"
-            print("AI Error: \(error)")
         }
         
         isLoading = false
@@ -125,7 +148,7 @@ class AIService: ObservableObject {
         Task {
             do {
                 let swiftData = SwiftDataService.shared
-                if let profile = swiftData.fetchUserProfile() { // Simplified for now, MamaCareViewModel handles logic
+                if let profile = swiftData.fetchUserProfile() { // Simplified for now
                     let entry = ChatEntry.from(message, user: profile)
                     try swiftData.saveChatEntry(entry)
                     
@@ -136,7 +159,7 @@ class AIService: ObservableObject {
                             .sink { _ in } receiveValue: { _ in
                                 print("Chat entry synced to Firebase")
                             }
-                            .store(in: &self.cancellables) // Need cancellables
+                            .store(in: &self.cancellables)
                     }
                 }
             } catch {
@@ -144,6 +167,4 @@ class AIService: ObservableObject {
             }
         }
     }
-    
-    private var cancellables = Set<AnyCancellable>()
 }

@@ -65,7 +65,7 @@ struct Mama_CareTests {
     
     @Test func testEncryptionRoundTrip() {
         // Given
-        let originalText = "This is a secret message 🤫"
+        let originalText = "This is a secret message"
         let service = EncryptionService.shared
         
         // When

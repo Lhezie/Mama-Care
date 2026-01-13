@@ -267,7 +267,7 @@ class MamaCareViewModel: ObservableObject {
                     let granted = await self.notificationService.requestAuthorization()
                     if granted {
                         // Schedule with default times
-                        self.notificationService.scheduleMoodCheckInNotifications(times: finalUser.checkInTimes)
+                        try? await self.notificationService.scheduleMoodCheckInNotifications(times: finalUser.checkInTimes)
                         print(" Mood check-in notifications scheduled at: \(finalUser.checkInTimes)")
                     }
                 }
@@ -482,8 +482,7 @@ class MamaCareViewModel: ObservableObject {
                         self.fetchMoodCheckIns() // Load local moods
                     } else {
                         print(" No local data found either. User has an account but no data on this device.")
-                        // Still log them in, but they might need to set up profile?
-                        // For now, let's mark as logged in but maybe handle empty user state in UI
+                        
                         self.isLoggedIn = true
                         UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     }
@@ -851,7 +850,7 @@ class MamaCareViewModel: ObservableObject {
             if granted {
                 // Schedule with current times
                 let times = currentUser?.checkInTimes ?? [480, 840, 1200]
-                notificationService.scheduleMoodCheckInNotifications(times: times)
+                try? await notificationService.scheduleMoodCheckInNotifications(times: times)
                 return true
             } else {
                 // Permission denied, revert
@@ -867,15 +866,12 @@ class MamaCareViewModel: ObservableObject {
         }
     }
     
-    func saveNotificationTimes(_ times: [Int]) {
-        // Update user data
+    func saveNotificationTimes(_ times: [Int]) async throws {
         currentUser?.checkInTimes = times
         saveUserData()
         
-        // Schedule notifications with new times
-        notificationService.scheduleMoodCheckInNotifications(times: times)
+        try await notificationService.scheduleMoodCheckInNotifications(times: times)
         
-        // Sync to Firebase if cloud user
         if let user = currentUser, user.storageMode == .cloud, let uid = authService.currentUser?.uid {
             userService.createUserProfile(user: user, uid: uid)
                 .receive(on: DispatchQueue.main)

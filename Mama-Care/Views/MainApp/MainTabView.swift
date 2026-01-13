@@ -85,10 +85,7 @@ struct MainTabView: View {
         .onChange(of: selectedTab) { newTab in
             if newTab == 4 { // Emergency Tab
                 if !viewModel.isPremium {
-                    // Revert to last tab
-                    // We need a slight delay or just immediate set back? Immediate usually works or dispatch async.
-                    // But we don't have 'oldValue' easily in SwiftUI < 17 without tracking.
-                    // Simplest tracking:
+                    
                     selectedTab = lastSelectedTab
                     showPremiumAlert = true
                 } else {

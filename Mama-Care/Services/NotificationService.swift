@@ -54,21 +54,30 @@ class NotificationService: NSObject, ObservableObject {
     
     //  Mood Check-In Notifications
     
-    func scheduleMoodCheckInNotifications(times: [Int]? = nil) {
-        // times are in minutes since midnight (e.g., 480 = 08:00, 840 = 14:00)
-        let checkInTimes = times ?? [480, 840, 1200] // Default: 08:00, 14:00, 20:00
+    func scheduleMoodCheckInNotifications(times: [Int]? = nil) async throws {
+        let settings = await notificationCenter.notificationSettings()
         
-        // Cancel existing mood notifications
+        if settings.authorizationStatus == .notDetermined {
+            let granted = await requestAuthorization()
+            if !granted {
+                throw NSError(domain: "NotificationService", code: 401, userInfo: [NSLocalizedDescriptionKey: "Notification permission denied"])
+            }
+        } else if settings.authorizationStatus != .authorized {
+             throw NSError(domain: "NotificationService", code: 401, userInfo: [NSLocalizedDescriptionKey: "Notifications are disabled. Please enable them in Settings."])
+        }
+        
+        let checkInTimes = times ?? [480, 840, 1200]
+        
         cancelMoodCheckInNotifications()
         
         for minutesSinceMidnight in checkInTimes {
-            scheduleMoodNotification(at: minutesSinceMidnight)
+            try await scheduleMoodNotification(at: minutesSinceMidnight)
         }
         
         print("Scheduled \(checkInTimes.count) mood check-in notifications")
     }
     
-    private func scheduleMoodNotification(at minutesSinceMidnight: Int) {
+    private func scheduleMoodNotification(at minutesSinceMidnight: Int) async throws {
         let hour = minutesSinceMidnight / 60
         let minute = minutesSinceMidnight % 60
         
@@ -87,13 +96,8 @@ class NotificationService: NSObject, ObservableObject {
         let identifier = "mood-checkin-\(minutesSinceMidnight)"
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
-        notificationCenter.add(request) { error in
-            if let error = error {
-                print("Failed to schedule mood notification at \(String(format: "%02d:%02d", hour, minute)) - \(error)")
-            } else {
-                print("Scheduled mood notification at \(String(format: "%02d:%02d", hour, minute))")
-            }
-        }
+        try await notificationCenter.add(request)
+        print("Scheduled mood notification at \(String(format: "%02d:%02d", hour, minute))")
     }
     
     func cancelMoodCheckInNotifications() {

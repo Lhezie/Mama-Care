@@ -91,32 +91,14 @@ struct SettingsView: View {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack {
                                 DatePicker("First Check-in", selection: $firstCheckInTime, displayedComponents: .hourAndMinute)
-                                    .disabled(isTimeInPast(firstCheckInTime))
-                                if isTimeInPast(firstCheckInTime) {
-                                    Text("(Passed)")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                }
                             }
                             
                             HStack {
                                 DatePicker("Second Check-in", selection: $secondCheckInTime, displayedComponents: .hourAndMinute)
-                                    .disabled(isTimeInPast(secondCheckInTime))
-                                if isTimeInPast(secondCheckInTime) {
-                                    Text("(Passed)")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                }
                             }
                             
                             HStack {
                                 DatePicker("Third Check-in", selection: $thirdCheckInTime, displayedComponents: .hourAndMinute)
-                                    .disabled(isTimeInPast(thirdCheckInTime))
-                                if isTimeInPast(thirdCheckInTime) {
-                                    Text("(Passed)")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                }
                             }
                         }
                         
@@ -372,8 +354,15 @@ struct SettingsView: View {
             minutesFromDate(thirdCheckInTime)
         ]
         
-        viewModel.saveNotificationTimes(times)
-        showSaveSuccess = true
+        Task {
+            do {
+                try await viewModel.saveNotificationTimes(times)
+                showSaveSuccess = true
+            } catch {
+                deleteError = error.localizedDescription
+                showDeleteError = true // Reusing the generic error alert
+            }
+        }
     }
     
     private func saveDateChanges() {

@@ -59,12 +59,12 @@ class AuthService {
         }
     }
     
-    // MARK: - Sign Out
+    //  Sign Out
     func signOut() throws {
         try Auth.auth().signOut()
     }
     
-    // MARK: - Password Reset
+    //  Password Reset
     func sendPasswordResetEmail(email: String) -> Future<Void, Error> {
         return Future { promise in
             Auth.auth().sendPasswordReset(withEmail: email) { error in
@@ -77,7 +77,7 @@ class AuthService {
         }
     }
     
-    // MARK: - Delete Account
+    //  Delete Account
     func deleteAccount() -> Future<Void, Error> {
         return Future { promise in
             guard let user = Auth.auth().currentUser else {
@@ -95,7 +95,7 @@ class AuthService {
         }
     }
     
-    // MARK: - Current User
+    //  Current User
     var currentUser: FirebaseAuth.User? {
         return Auth.auth().currentUser
     }

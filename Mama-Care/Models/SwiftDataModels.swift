@@ -150,12 +150,7 @@ final class UserProfile {
         self.vaccineRecords = []
         self.chatEntries = []
         
-        // Initialize encrypted properties locally
-        // We cannot use self.firstName = firstName because self is not fully initialized
-        // So we use the helper functions directly or temporary variables
-        // Actually, property observers don't fire in init, but computed properties work if backing store is init.
-        // But we can't use 'self' before all stored properties are init.
-        // So we assign nil to encrypted fields first, then set them.
+    
         
         self.encryptedFirstName = nil
         self.encryptedLastName = nil

@@ -69,7 +69,7 @@ class SubscriptionService: ObservableObject {
             return nil
             
         case .pending:
-            print("⏳ Purchase pending")
+            print(" Purchase pending")
             return nil
             
         @unknown default:

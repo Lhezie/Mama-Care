@@ -270,8 +270,6 @@ class UserService {
         return Future { [weak self] promise in
             guard let self = self else { return }
             
-            // Note: Content is ALREADY encrypted by the AIService/SwiftDataModel
-            // We just upload the data as-is to Firestore
             let data: [String: Any] = [
                 "id": entry.id.uuidString,
                 "date": entry.date,
@@ -318,7 +316,7 @@ class UserService {
                               let encryptedData = data["encryptedContent"] as? Data,
                               let timestamp = data["date"] as? Timestamp else { return nil }
                         
-                        // We return a DTO here; the ViewModel will decrypt
+                        //  return a DTO here; the ViewModel will decrypt
                         if let content = EncryptionService.shared.decryptString(encryptedData) {
                             return ChatMessage(id: id, content: content, isUser: isUser, timestamp: timestamp.dateValue())
                         }

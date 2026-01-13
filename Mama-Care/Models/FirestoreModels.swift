@@ -19,7 +19,7 @@ struct EncryptedContactDTO: Codable {
 }
 
 struct EncryptedUserFirestoreData: Codable {
-    // We use this matching the Firestore document structure
+    // I used this to match the Firestore document structure
     let id: String
     let firstName: Data
     let lastName: Data

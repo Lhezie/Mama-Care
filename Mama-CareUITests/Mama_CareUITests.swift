@@ -101,7 +101,7 @@ final class Mama_CareUITests: XCTestCase {
             }
         }
         
-        // --- Dashboard / Mood Tracking ---
+        //  Dashboard / Mood Tracking 
         // Verify we are on dashboard (Mood Check-In header exists)
         let moodHeader = app.staticTexts["Daily Mood Check-In"]
         if moodHeader.waitForExistence(timeout: 5.0) {
